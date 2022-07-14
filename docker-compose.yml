@@ -1,0 +1,37 @@
+version: '3.8'
+
+volumes:
+  billing_postgres_data:
+  static_volume:
+
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    volumes:
+      - billing_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-example
+
+  web:
+    build:
+      context: billing_admin_panel
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-example
+    volumes:
+      - static_volume:/billing_admin/static
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:1.22.0
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf:ro
+      - static_volume:/backend/static
+    depends_on:
+      - web

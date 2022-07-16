@@ -1,7 +1,7 @@
 version: '3.8'
 
 volumes:
-  billing_postgres_data:
+  yap_billing_postgres_data:
   static_volume:
 
 services:
@@ -9,7 +9,7 @@ services:
     image: postgres:13
     restart: always
     volumes:
-      - billing_postgres_data:/var/lib/postgresql/data/
+      - yap_billing_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env-example
 

@@ -67,6 +67,7 @@ class Transaction(UUIDMixin):
         default=TransactionStatus.PROCESSING,
         max_length=100,
     )
+    code = models.TextField(max_length=128, unique=True)
 
     class Meta:
         db_table = "transaction"

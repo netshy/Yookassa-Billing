@@ -29,7 +29,7 @@ class SubscriptionPlan(UUIDMixin):
         db_table = "subscription_plan"
 
     def __str__(self):
-        return f"Subscription Plan: {self.name}. Cost: {self.price}"
+        return f"Subscription Plan: {self.name}. Cost: {self.price} {self.currency}"
 
 
 class Subscription(UUIDMixin, TimeStampedMixin):

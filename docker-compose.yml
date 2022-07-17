@@ -2,7 +2,9 @@ version: '3.8'
 
 volumes:
   graduate_billing_postgres_data:
+  graduate_auth_postgres_data:
   static_volume:
+  auth_redis_data:
 
 services:
   billing_postgres:
@@ -12,6 +14,14 @@ services:
       - graduate_billing_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env-billing-example
+
+  auth_postgres:
+    image: postgres:13
+    restart: always
+    volumes:
+      - graduate_auth_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-auth-example
 
   admin_panel_web:
     build:
@@ -25,6 +35,18 @@ services:
     depends_on:
       - billing_postgres
 
+  flask_auth_web:
+    build:
+      context: ./auth_app
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env-auth-example
+    depends_on:
+      - auth_redis
+
   nginx:
     image: nginx:1.22.0
     ports:
@@ -35,3 +57,10 @@ services:
       - static_volume:/backend/static
     depends_on:
       - admin_panel_web
+
+  auth_redis:
+    image: redis:6.2.1
+    command: redis-server --requirepass 123qwe
+    restart: always
+    volumes:
+      - auth_redis_data:/data

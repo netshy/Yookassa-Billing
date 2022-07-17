@@ -13,6 +13,13 @@ class UUIDMixin(models.Model):
         abstract = True
 
 
+class CustomerUUIDMixin(models.Model):
+    customer_id = models.UUIDField()
+
+    class Meta:
+        abstract = True
+
+
 class TimeStampedMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

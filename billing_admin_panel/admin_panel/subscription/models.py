@@ -8,7 +8,7 @@ from subscription.model_mixins import (
     TimeStampedMixin,
     SubscriptionStatus,
     TransactionStatus,
-    RefundStatus,
+    RefundStatus, CustomerUUIDMixin,
 )
 
 
@@ -32,12 +32,9 @@ class SubscriptionPlan(UUIDMixin):
         return f"Subscription Plan: {self.name}. Cost: {self.price} {self.currency}"
 
 
-class Subscription(UUIDMixin, TimeStampedMixin):
+class Subscription(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
     plan_id = models.ForeignKey(
         "SubscriptionPlan", on_delete=models.CASCADE, related_name="subscriptions"
-    )
-    customer_id = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name="subscriptions"
     )
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
@@ -54,12 +51,9 @@ class Subscription(UUIDMixin, TimeStampedMixin):
         return f"Subscription: {self.id} for customer id: {self.customer_id}"
 
 
-class Transaction(UUIDMixin):
+class Transaction(UUIDMixin, CustomerUUIDMixin):
     plan_id = models.ForeignKey(
         "SubscriptionPlan", on_delete=models.CASCADE, related_name="transactions"
-    )
-    customer_id = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name="transactions"
     )
     session_id = models.TextField()
     status = models.CharField(
@@ -76,10 +70,7 @@ class Transaction(UUIDMixin):
         return f"Transaction: {self.id} for customer: {self.customer_id}. Status: {self.status}"
 
 
-class Refund(UUIDMixin, TimeStampedMixin):
-    customer_id = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name="refunds"
-    )
+class Refund(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
     transaction_id = models.ForeignKey(
         "Transaction", on_delete=models.CASCADE, related_name="refunds"
     )
@@ -96,8 +87,3 @@ class Refund(UUIDMixin, TimeStampedMixin):
             f"Refund for customer id: {self.customer_id}. Transaction id: {self.transaction_id}. "
             f"Amount: {self.amount}. Status: {self.status}"
         )
-
-
-class User(AbstractUser):
-    class Meta:
-        db_table = "user"

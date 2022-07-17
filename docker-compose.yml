@@ -5,25 +5,25 @@ volumes:
   static_volume:
 
 services:
-  postgres:
+  billing_postgres:
     image: postgres:13
     restart: always
     volumes:
       - graduate_billing_postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env-example
+      - .env-billing-example
 
-  web:
+  admin_panel_web:
     build:
       context: billing_admin_panel
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env-example
+      - .env-billing-example
     volumes:
       - static_volume:/billing_admin/static
     depends_on:
-      - postgres
+      - billing_postgres
 
   nginx:
     image: nginx:1.22.0
@@ -34,4 +34,4 @@ services:
       - ./nginx/site.conf:/etc/nginx/conf.d/site.conf:ro
       - static_volume:/backend/static
     depends_on:
-      - web
+      - admin_panel_web

@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -61,7 +63,7 @@ class Transaction(UUIDMixin, CustomerUUIDMixin):
         default=TransactionStatus.PROCESSING,
         max_length=100,
     )
-    code = models.TextField(max_length=128, unique=True)
+    idempotence_key = models.UUIDField(default=uuid.uuid4, editable=False)
 
     class Meta:
         db_table = "transaction"

@@ -10,6 +10,8 @@ class User(BaseModelMixin, sql_db.Model):
 
     login = sql_db.Column(sql_db.String, unique=True, nullable=False)
     password = sql_db.Column(sql_db.String, nullable=False)
+    first_name = sql_db.Column(sql_db.String, nullable=True)
+    last_name = sql_db.Column(sql_db.String, nullable=True)
 
     def __init__(self, login, password):
         self.login = login

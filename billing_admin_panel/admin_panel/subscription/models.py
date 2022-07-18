@@ -1,6 +1,5 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from subscription.model_mixins import (
@@ -10,7 +9,9 @@ from subscription.model_mixins import (
     TimeStampedMixin,
     SubscriptionStatus,
     TransactionStatus,
-    RefundStatus, CustomerUUIDMixin,
+    RefundStatus,
+    CustomerUUIDMixin,
+    SubscriptionPlanType,
 )
 
 
@@ -19,12 +20,17 @@ class SubscriptionPlan(UUIDMixin):
     price = models.IntegerField()
     duration = models.IntegerField()
     currency = models.CharField(
-        choices=CurrencyType.choices, default=CurrencyType.USD, max_length=10
+        choices=CurrencyType.choices, default=CurrencyType.RUB, max_length=10
     )
     status = models.CharField(
         choices=SubscriptionPlanStatus.choices,
         default=SubscriptionPlanStatus.ACTIVE,
         max_length=100,
+    )
+    type = models.CharField(
+        choices=SubscriptionPlanType.choices,
+        default=SubscriptionPlanType.BASIC,
+        max_length=30
     )
 
     class Meta:

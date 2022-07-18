@@ -80,6 +80,7 @@ class UserLogin(Resource):
 
         # create tokens with roles
         additional_claims = {
+            "login": user.login,
             "roles": user.get_all_roles(),
             "session_id": str(session.id),
         }

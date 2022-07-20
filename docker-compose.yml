@@ -40,12 +40,20 @@ services:
       context: ./auth_app
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "8080:8080"
     env_file:
       - .env-auth-example
     depends_on:
       - auth_redis
+
+  subscription_api_web:
+    build:
+      context: subscription_api
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    depends_on:
+      - billing_postgres
 
   nginx:
     image: nginx:1.22.0

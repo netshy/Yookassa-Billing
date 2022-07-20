@@ -60,3 +60,8 @@ wrapt==1.14.0
 zipp==3.8.0
 zope.event==4.5.0
 zope.interface==5.4.0
+grpcio-tools==1.46.0
+PyJWT==2.3.0
+redis==4.2.2
+environs==9.5.0
+argon2-cffi==21.3.0

@@ -2,17 +2,17 @@ from concurrent import futures
 
 import grpc
 
-from auth_app.grpc_server import user_pb2_grpc
-from auth_app.grpc_server.settings import grpc_settings
-from grpc_server import user_pb2
+import user_pb2
+import user_pb2_grpc
+from settings import grpc_settings
 
 
 class UserService(user_pb2_grpc.UserService):
     def GetUser(self, request, context):
-        from models.db_models import User as user_model
+        from models import User
         """Get user info from jwt token."""
-        user = user_model.find_by_login(request.login)
-        user_pb2.UserReply(
+        user = User.find_by_login(request.login)
+        return user_pb2.UserReply(
             id=user.id,
             login=user.login,
             first_name=user.first_name,

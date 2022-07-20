@@ -16,5 +16,5 @@ COPY --chown=auth:auth ./ .
 COPY --chown=auth:auth ./entrypoint.sh .
 
 EXPOSE 8080
-
+ENV PYTHONPATH $APP_DIR
 ENTRYPOINT ["sh","./entrypoint.sh"]

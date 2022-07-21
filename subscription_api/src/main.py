@@ -3,7 +3,7 @@ from typing import List
 from fastapi import FastAPI, Depends
 from db.database import Base, engine, SessionLocal
 from schemas.subscription_schema import SubscriptionPlanSchema
-from db.crud import get_subscriptions_plan
+from db.crud import get_subscriptions_plan, get_subscriptions_plan_by_id
 from sqlalchemy.orm import Session
 
 Base.metadata.create_all(bind=engine)
@@ -25,6 +25,14 @@ async def root():
 
 
 @app.get("/api/billing/v1/subscriptions", response_model=List[SubscriptionPlanSchema])
-def get_subscription_plan(db: Session = Depends(get_db)):
+def get_subscription_plans(db: Session = Depends(get_db)):
     subscription_plans = get_subscriptions_plan(db)
     return subscription_plans
+
+
+@app.get("/api/billing/v1/subscriptions/{subscription_id}", response_model=SubscriptionPlanSchema)
+def get_subscription_plan(subscription_id: str, db: Session = Depends(get_db)):
+    subscription_plan = get_subscriptions_plan_by_id(db, subscription_id)
+    return subscription_plan
+
+

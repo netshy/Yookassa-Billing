@@ -19,12 +19,12 @@ def get_db():
         db.close()
 
 
-@app.get("/subscription/api/v1/hello")
+@app.get("/api/subscription/v1/hello")
 async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/subscription/api/v1/subscriptions", response_model=List[SubscriptionPlanSchema])
+@app.get("/api/subscription/v1/subscriptions", response_model=List[SubscriptionPlanSchema])
 def get_subscription_plan(db: Session = Depends(get_db)):
     subscription_plans = get_subscriptions_plan(db)
     return subscription_plans

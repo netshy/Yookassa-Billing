@@ -1,6 +1,6 @@
 from db.database import Base
 from db.enums import CurrencyTypeEnum, SubscriptionPlanStatusEnum, SubscriptionStatus, TransactionStatus, RefundStatus
-from sqlalchemy import Column, Integer, String, Enum as enm, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 
 from db.mixins import UUIDMixin, TimeStampedMixin, CustomerUUIDMixin
@@ -12,8 +12,8 @@ class SubscriptionPlanModel(UUIDMixin, Base):
     name = Column(String)
     price = Column(Integer)
     duration = Column(Integer)
-    currency = Column(enm(CurrencyTypeEnum))
-    status = Column(enm(SubscriptionPlanStatusEnum))
+    currency = Column(Enum(CurrencyTypeEnum))
+    status = Column(Enum(SubscriptionPlanStatusEnum))
 
 
 class SubscriptionModel(UUIDMixin, TimeStampedMixin, CustomerUUIDMixin, Base):
@@ -21,7 +21,7 @@ class SubscriptionModel(UUIDMixin, TimeStampedMixin, CustomerUUIDMixin, Base):
 
     plan_id = Column(UUID, ForeignKey("subscription_plan.id"))
     start_date = Column(DateTime)
-    status = Column(enm(SubscriptionStatus))
+    status = Column(Enum(SubscriptionStatus))
 
 
 class TransactionModel(UUIDMixin, CustomerUUIDMixin, Base):
@@ -30,7 +30,7 @@ class TransactionModel(UUIDMixin, CustomerUUIDMixin, Base):
     plan_id = Column(UUID, ForeignKey("subscription_plan.id"))
     session_id = Column(String)
     code = Column(UUID)
-    status = Column(enm(TransactionStatus))
+    status = Column(Enum(TransactionStatus))
 
 
 class RefundModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):
@@ -38,5 +38,4 @@ class RefundModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):
 
     transaction_id = Column(UUID, ForeignKey("transaction.id"))
     amount = Column(Integer)
-    status = Column(enm(RefundStatus))
-    
+    status = Column(Enum(RefundStatus))

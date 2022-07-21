@@ -19,7 +19,7 @@ sql_db = SQLAlchemy(app)
 install_models()
 migrate = Migrate(app, sql_db)
 
-api = Api(app, prefix="/auth/api/v1")
+api = Api(app, prefix="/api/auth/v1")
 ma = Marshmallow(app)
 
 SWAGGER_TEMPLATE = {

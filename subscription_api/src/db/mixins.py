@@ -7,7 +7,7 @@ class UUIDMixin:
 
 
 class CustomerUUIDMixin:
-    id = Column(UUID)
+    customer_id = Column(UUID)
 
 
 class TimeStampedMixin:

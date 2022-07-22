@@ -33,7 +33,7 @@ class SubscriptionPlan(UUIDMixin):
 
 
 class Subscription(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
-    plan_id = models.ForeignKey(
+    plan = models.ForeignKey(
         "SubscriptionPlan", on_delete=models.CASCADE, related_name="subscriptions"
     )
     start_date = models.DateTimeField(auto_now_add=True)
@@ -52,7 +52,7 @@ class Subscription(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
 
 
 class Transaction(UUIDMixin, CustomerUUIDMixin):
-    plan_id = models.ForeignKey(
+    plan = models.ForeignKey(
         "SubscriptionPlan", on_delete=models.CASCADE, related_name="transactions"
     )
     session_id = models.TextField()
@@ -71,7 +71,7 @@ class Transaction(UUIDMixin, CustomerUUIDMixin):
 
 
 class Refund(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
-    transaction_id = models.ForeignKey(
+    transaction = models.ForeignKey(
         "Transaction", on_delete=models.CASCADE, related_name="refunds"
     )
     amount = models.IntegerField()

@@ -18,7 +18,7 @@ class SubscriptionStatus(str, Enum):
 
 class TransactionStatus(str, Enum):
     Processing = "Processing"
-    Pai = "Paid"
+    Paid = "Paid"
     Declined = "Declined"
 
 

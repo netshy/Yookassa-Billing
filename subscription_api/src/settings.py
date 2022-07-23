@@ -1,4 +1,5 @@
 import logging
+import os
 
 from pydantic import BaseConfig
 
@@ -12,3 +13,10 @@ logging.basicConfig(
 )
 
 api_logger = logging.getLogger()
+
+
+class Config(BaseConfig):
+    PROJECT_NAME: str = os.getenv("PROJECT_NAME", "billing")
+
+
+billing_setting = Config()

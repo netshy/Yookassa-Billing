@@ -1,26 +1,19 @@
 from typing import List
 
-from db.crud import (
-    get_all_transactions,
-    get_transaction_by_id,
-)
+from db.service.pg_service import PostgresService, get_db_service
 from fastapi import Depends, APIRouter
-
-from db.database import get_db
 from schemas.subscription_schema import TransactionSchema
-from sqlalchemy.orm import Session
-
 
 router = APIRouter()
 
 
 @router.get("/", response_model=List[TransactionSchema])
-def transactions_list(db: Session = Depends(get_db)):
-    transactions = get_all_transactions(db)
+def transactions_list(db_service: PostgresService = Depends(get_db_service)):
+    transactions = db_service.get_all_transactions()
     return transactions
 
 
 @router.get("/{transaction_id}", response_model=TransactionSchema)
-def transaction_get(transaction_id: str, db: Session = Depends(get_db)):
-    transaction = get_transaction_by_id(db, transaction_id)
+def transaction_get(transaction_id: str, db_service: PostgresService = Depends(get_db_service)):
+    transaction = db_service.get_transaction_by_id(transaction_id)
     return transaction

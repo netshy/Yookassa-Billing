@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-
-from api.v1.subscription_plans.views import router as subscription_router
-from api.v1.transactions.views import router as transaction_router
-from db.database import Base, engine, SessionLocal
-from settings import billing_setting
-from db import storage
 from yookassa import Configuration
 
+from api.v1.subscription_plans.views import router as subscription_plans_router
+from api.v1.subscriptions.views import router as subscription_router
+from api.v1.transactions.views import router as transaction_router
+from db import storage
+from db.database import Base, engine, SessionLocal
+from settings import billing_setting
 
 app = FastAPI(
     title=billing_setting.PROJECT_NAME,
@@ -30,5 +30,6 @@ async def shutdown():
     await storage.db_storage.close()
 
 
-app.include_router(subscription_router, prefix="/api/billing/v1/subscription_plans", tags=["subscriptions"])
+app.include_router(subscription_plans_router, prefix="/api/billing/v1/subscription_plans", tags=["subscription_plans"])
 app.include_router(transaction_router, prefix="/api/billing/v1/transactions", tags=["transactions"])
+app.include_router(subscription_router, prefix="/api/billing/v1/subscriptions", tags=["subscriptions"])

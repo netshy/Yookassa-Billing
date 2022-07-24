@@ -34,8 +34,3 @@ class PaymentTransactionSchema(CommonTransactionField):
 
 class TransactionConfirmationUrl(BaseModel):
     confirmation_url: str
-
-
-class CreateTransactionSchema(BaseModel):
-    customer_id: str
-    subscription_plan_id: str

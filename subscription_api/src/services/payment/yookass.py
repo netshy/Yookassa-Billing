@@ -27,7 +27,7 @@ class YooKassPayment(PaymentBaseService):
                 },
                 "metadata": {"key": idempotence_key},
                 "capture": True,
-                "description": "Заказ №1"
+                "description": f"Оплата тарифного плана {plan.name}. Стоимость: {plan.price}{plan.currency}."
             }, idempotence_key
         )
         payment_data = json.loads(payment.json())

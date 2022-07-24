@@ -35,3 +35,8 @@ class RefundSchema(DateTimeBase):
     customer_id: str
     amount: int
     status: str
+
+
+class CreateSubscriptionSchema(BaseModel):
+    customer_id: str
+    subscription_plan_id: str

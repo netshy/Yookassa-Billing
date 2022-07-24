@@ -1,10 +1,12 @@
+import uuid
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
 class CommonTransactionField(BaseModel):
-    customer_id: str
+    customer_id: uuid.UUID
     plan_id: str
     session_id: str
     status: str
@@ -13,9 +15,14 @@ class CommonTransactionField(BaseModel):
     paid: bool
     amount: float
 
+    class Config:
+        orm_mode = True
+
 
 class TransactionSchema(CommonTransactionField):
-    id: str
+    id: uuid.UUID
+    created_at: datetime
+    updated_at: datetime
 
 
 class PaymentTransactionSchema(CommonTransactionField):
@@ -26,10 +33,6 @@ class PaymentTransactionSchema(CommonTransactionField):
 
 
 class TransactionConfirmationUrl(BaseModel):
-    confirmation_url: str
-
-
-class ConfirmationUrl(BaseModel):
     confirmation_url: str
 
 

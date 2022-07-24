@@ -16,19 +16,10 @@ class DateTimeBase(BillingBase):
 
 
 class SubscriptionPlanSchema(BillingBase):
-
     price: int
     duration: int
     currency: str
     status: str
-
-
-class TransactionSchema(BillingBase):
-    customer_id: str
-    plan_id: str
-    session_id: str
-    status: str
-    code: str
 
 
 class SubscriptionSchema(DateTimeBase):

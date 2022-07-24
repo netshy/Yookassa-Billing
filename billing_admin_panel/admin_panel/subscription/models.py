@@ -62,6 +62,9 @@ class Transaction(UUIDMixin, CustomerUUIDMixin):
         max_length=100,
     )
     code = models.TextField(max_length=128, unique=True)
+    paid = models.BooleanField(default=False)
+    description = models.TextField(default="Order Transaction")
+    amount = models.IntegerField(default=0)
 
     class Meta:
         db_table = "transaction"

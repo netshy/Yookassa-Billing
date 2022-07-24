@@ -6,10 +6,8 @@ class PaymentBaseService(ABC):
 
     return_url: Optional[str] = None
 
-    def __init__(self, secret_key: str, account_id: Optional[str] = None, storage=None):
-        self.secret_key = secret_key
-        self.account_id = account_id
-        self.storage = storage
+    def __init__(self, storage_service=None):
+        self.storage_service = storage_service
 
     @abstractmethod
     def create_payment(self, *args, **kwargs):

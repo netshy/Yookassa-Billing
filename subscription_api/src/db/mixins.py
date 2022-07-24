@@ -1,15 +1,23 @@
-from sqlalchemy import Column, DateTime
+import uuid
+
+from sqlalchemy import Column, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
 
 
 class UUIDMixin:
-    id = Column(UUID, primary_key=True, index=True)
+    id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        index=True,
+        default=uuid.uuid4,
+        unique=True
+    )
 
 
 class CustomerUUIDMixin:
-    customer_id = Column(UUID)
+    customer_id = Column()
 
 
 class TimeStampedMixin:
-    created_at = Column(DateTime)
-    updated_at = Column(DateTime)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now())

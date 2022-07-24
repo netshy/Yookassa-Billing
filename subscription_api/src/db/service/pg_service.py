@@ -28,6 +28,12 @@ class PostgresService(BaseDBService):
             SubscriptionModel.status == "Active"
         ).first() is not None
 
+    def check_pending_transaction(self, customer_id: str):
+        return self.session.query(TransactionModel).filter(
+            TransactionModel.customer_id == customer_id,
+            TransactionModel.status == 'pending',
+        ).first() is not None
+
     def get_subscription_plan(self, subscription_plan_id: str):
         return self.session.query(SubscriptionPlanModel).filter(
             SubscriptionPlanModel.id == subscription_plan_id

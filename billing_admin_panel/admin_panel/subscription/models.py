@@ -51,7 +51,7 @@ class Subscription(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
         return f"Subscription: {self.id} for customer id: {self.customer_id}"
 
 
-class Transaction(UUIDMixin, CustomerUUIDMixin):
+class Transaction(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
     plan = models.ForeignKey(
         "SubscriptionPlan", on_delete=models.CASCADE, related_name="transactions"
     )

@@ -1,11 +1,14 @@
 import click
+from flask import Blueprint
 
-from auth import app, sql_db
 from config import ADMIN_ROLE
+from db.db import sql_db
 from models import User, UserRole, Role
 
+users = Blueprint("users", __name__)
 
-@app.cli.command("createsuperuser")
+
+@users.cli.command("createsuperuser")
 @click.argument("name")
 @click.argument("password")
 def create_super_user(name, password):

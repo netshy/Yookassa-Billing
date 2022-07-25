@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields
 
-from auth import ma
+from marshm import ma
 from models import User
 from schemas.role import RoleSchema
 

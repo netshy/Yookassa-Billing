@@ -7,7 +7,7 @@ from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
 
 from api.v1.utils.decorators import token_not_in_block_list
-from auth import sql_db
+from db.db import sql_db
 from models.utils import hash_user_password
 from schemas.user import UserUpdatePasswordSchema, UserUpdateUsernameSchema
 

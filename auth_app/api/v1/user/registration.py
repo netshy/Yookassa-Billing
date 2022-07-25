@@ -4,7 +4,7 @@ from flask import request, jsonify, make_response
 from flask_restful import Resource
 from marshmallow import ValidationError
 
-from auth import sql_db
+from db.db import sql_db
 from models.db_models import User
 from schemas.user import UserRegistrationSchema
 

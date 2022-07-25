@@ -1,6 +1,6 @@
 from sqlalchemy.dialects.postgresql import UUID
 
-from auth import sql_db
+from db.db import sql_db
 from models.model_mixins import BaseModelMixin
 from models.utils import hash_user_password, check_hashed_password
 

@@ -65,3 +65,4 @@ PyJWT==2.3.0
 redis==4.2.2
 environs==9.5.0
 argon2-cffi==21.3.0
+pydantic==1.9.1

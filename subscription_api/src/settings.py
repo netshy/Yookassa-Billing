@@ -19,6 +19,8 @@ class Config(BaseConfig):
     PROJECT_NAME: str = os.getenv("PROJECT_NAME")
     YOOKASSA_ID: str = os.getenv("YOOKASSA_ID")
     YOOKASSA_SECRET: str = os.getenv("YOOKASSA_SECRET")
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY")
+    JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM")
 
 
 billing_setting = Config()

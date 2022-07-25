@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from api.v1.transactions.messages import ALREADY_EXIST, PENDING_TRANSACTION
 from db.service.pg_service import PostgresService, get_db_service
@@ -20,6 +20,7 @@ def transactions_list(db_service: PostgresService = Depends(get_db_service)):
 
 @router.post("/", response_model=TransactionConfirmationUrl)
 def create_subscription(
+        request: Request,
         data: CreateSubscriptionSchema,
         db_service: PostgresService = Depends(get_db_service),
         payment_service: YooKassPayment = Depends(get_payment_service)
@@ -27,7 +28,7 @@ def create_subscription(
     # check if user have active subscription
     is_exist = db_service.check_active_user_subscription(
         subscription_plan_id=data.subscription_plan_id,
-        customer_id=data.customer_id
+        customer_id=request.user.id
     )
     if is_exist:
         raise HTTPException(
@@ -35,14 +36,14 @@ def create_subscription(
         )
     # check if user have pending transaction
     is_pending = db_service.check_pending_transaction(
-        customer_id=data.customer_id
+        customer_id=request.user.id
     )
     if is_pending:
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT, detail=PENDING_TRANSACTION
         )
     data = payment_service.create_payment(
-        user_id=data.customer_id,
+        user_id=request.user.id,
         subscription_id=data.subscription_plan_id
     )
     return TransactionConfirmationUrl(confirmation_url=data)

@@ -1,9 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
+from starlette.middleware.authentication import AuthenticationMiddleware
 from yookassa import Configuration
 
 from api.v1.subscription_plans.views import router as subscription_plans_router
 from api.v1.transactions.views import router as transaction_router
+from core.auth.middleware import CustomAuthBackend
 from db import storage
 from db.database import Base, engine, SessionLocal
 from settings import billing_setting
@@ -15,6 +17,7 @@ app = FastAPI(
     default_response_class=ORJSONResponse,
 )
 
+app.add_middleware(AuthenticationMiddleware, backend=CustomAuthBackend())
 Configuration.configure(billing_setting.YOOKASSA_ID, billing_setting.YOOKASSA_SECRET)
 
 

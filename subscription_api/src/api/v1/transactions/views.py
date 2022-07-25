@@ -4,6 +4,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Request
 
 from api.v1.transactions.messages import ALREADY_EXIST, PENDING_TRANSACTION
+from core.auth.wrapper import login_required
 from db.service.pg_service import PostgresService, get_db_service
 from schemas.subscription_schema import CreateSubscriptionSchema
 from schemas.transaction import TransactionSchema, TransactionConfirmationUrl
@@ -19,6 +20,7 @@ def transactions_list(db_service: PostgresService = Depends(get_db_service)):
 
 
 @router.post("/", response_model=TransactionConfirmationUrl)
+@login_required()
 def create_subscription(
         request: Request,
         data: CreateSubscriptionSchema,

@@ -33,7 +33,7 @@ class CustomAuthBackend(AuthenticationBackend):
                 billing_setting.JWT_SECRET_KEY,
                 algorithms=[billing_setting.JWT_ALGORITHM]
             )
-        except jwt.InvalidSignatureError:
+        except jwt.DecodeError:
             return AuthCredentials(), UnauthenticatedUser()
 
         with grpc.insecure_channel("flask_auth_web:50055") as channel:

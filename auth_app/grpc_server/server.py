@@ -22,14 +22,12 @@ class UserService(user_pb2_grpc.UserService):
                 return user_pb2.UserReply(
                     id=None,
                     login=None,
-                    first_name=None,
-                    last_name=None
+                    email=None,
                 )
             return user_pb2.UserReply(
                 id=str(user.id),
                 login=user.login,
-                first_name=user.first_name,
-                last_name=user.last_name
+                email=user.email,
             )
 
 

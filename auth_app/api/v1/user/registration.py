@@ -71,7 +71,14 @@ class UserRegistration(Resource):
                 http.HTTPStatus.BAD_REQUEST,
             )
 
-        new_user = User(login=user["username"], password=user["password"])
+        email_is_exists = User.find_by_email(user["email"])
+        if email_is_exists:
+            return make_response(
+                jsonify({"msg": f"User with email {user['email']} already exists!"}),
+                http.HTTPStatus.BAD_REQUEST,
+            )
+
+        new_user = User(login=user["username"], password=user["password"], email=user["email"])
         sql_db.session.add(new_user)
         sql_db.session.commit()
 

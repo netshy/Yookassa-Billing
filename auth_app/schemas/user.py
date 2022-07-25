@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields
 
-from auth import ma
+from marshm import ma
 from models import User
 from schemas.role import RoleSchema
 
@@ -9,6 +9,7 @@ class UserRegistrationSchema(Schema):
     password_confirmation = fields.String(allow_none=False, required=True)
     password = fields.String(allow_none=False, required=True)
     username = fields.String(allow_none=False, required=True)
+    email = fields.String(allow_none=False, required=True)
 
 
 class UserUpdateUsernameSchema(Schema):

@@ -5,7 +5,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Resource
 from marshmallow import ValidationError
 
-from auth import sql_db
+from db.db import sql_db
 from db.redis import redis_cache_db
 from models import User, Session
 from schemas.user import UserLoginSchema
@@ -80,6 +80,7 @@ class UserLogin(Resource):
 
         # create tokens with roles
         additional_claims = {
+            "login": user.login,
             "roles": user.get_all_roles(),
             "session_id": str(session.id),
         }

@@ -38,6 +38,11 @@ class SubscriptionPlanStatus(models.TextChoices):
     ARCHIVED = "Archived"
 
 
+class SubscriptionPlanType(models.TextChoices):
+    BASIC = "Basic"
+    OPTIONAL = "Optional"
+
+
 class SubscriptionStatus(models.TextChoices):
     ACTIVE = "Active"
     EXPIRED = "Expired"

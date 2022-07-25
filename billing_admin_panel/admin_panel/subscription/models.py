@@ -7,7 +7,8 @@ from subscription.model_mixins import (
     TimeStampedMixin,
     SubscriptionStatus,
     TransactionStatus,
-    RefundStatus, CustomerUUIDMixin,
+    RefundStatus,
+    CustomerUUIDMixin,
 )
 
 
@@ -16,7 +17,7 @@ class SubscriptionPlan(UUIDMixin):
     price = models.IntegerField()
     duration = models.IntegerField()
     currency = models.CharField(
-        choices=CurrencyType.choices, default=CurrencyType.USD, max_length=10
+        choices=CurrencyType.choices, default=CurrencyType.RUB, max_length=10
     )
     status = models.CharField(
         choices=SubscriptionPlanStatus.choices,

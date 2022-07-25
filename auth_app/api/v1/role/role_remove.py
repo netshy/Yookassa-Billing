@@ -6,7 +6,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from api.v1.utils.decorators import token_not_in_block_list, admin_permission
-from auth import sql_db
+from db.db import sql_db
 from models.db_models import Role
 
 

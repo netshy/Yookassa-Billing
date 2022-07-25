@@ -1,4 +1,4 @@
-from auth import ma
+from marshm import ma
 from models.db_models import Session
 
 

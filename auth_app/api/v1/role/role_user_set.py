@@ -7,7 +7,7 @@ from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
 
 from api.v1.utils.decorators import token_not_in_block_list, admin_permission
-from auth import sql_db
+from db.db import sql_db
 from models.db_models import UserRole
 from schemas.role import UserRoleSchema, SingleUserRoleSchema
 

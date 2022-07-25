@@ -1,10 +1,10 @@
 from datetime import datetime
-
+import uuid
 from pydantic import BaseModel
 
 
 class BillingBase(BaseModel):
-    id: str
+    id: uuid.UUID
 
     class Config:
         orm_mode = True
@@ -23,16 +23,16 @@ class SubscriptionPlanSchema(BillingBase):
 
 
 class SubscriptionSchema(DateTimeBase):
-    customer_id: str
-    plan_id: str
+    customer_id: uuid.UUID
+    plan_id: uuid.UUID
     start_date: datetime
     end_date: datetime
     status: str
 
 
 class RefundSchema(DateTimeBase):
-    transaction_id: str
-    customer_id: str
+    transaction_id: uuid.UUID
+    customer_id: uuid.UUID
     amount: int
     status: str
 

@@ -9,6 +9,7 @@ class UserRegistrationSchema(Schema):
     password_confirmation = fields.String(allow_none=False, required=True)
     password = fields.String(allow_none=False, required=True)
     username = fields.String(allow_none=False, required=True)
+    email = fields.String(allow_none=False, required=True)
 
 
 class UserUpdateUsernameSchema(Schema):

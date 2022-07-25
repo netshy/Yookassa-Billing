@@ -22,8 +22,6 @@ services:
       - graduate_auth_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env-auth-example
-    ports:
-      - "5001:5432"
 
   admin_panel_web:
     build:

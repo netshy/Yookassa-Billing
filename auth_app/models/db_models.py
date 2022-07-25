@@ -10,12 +10,12 @@ class User(BaseModelMixin, sql_db.Model):
 
     login = sql_db.Column(sql_db.String, unique=True, nullable=False)
     password = sql_db.Column(sql_db.String, nullable=False)
-    first_name = sql_db.Column(sql_db.String, nullable=True)
-    last_name = sql_db.Column(sql_db.String, nullable=True)
+    email = sql_db.Column(sql_db.String, nullable=False, unique=True)
 
-    def __init__(self, login, password):
+    def __init__(self, login, password, email):
         self.login = login
         self.password = hash_user_password(password)
+        self.email = email
 
     def __repr__(self):
         return f"<User {self.login}>"
@@ -34,7 +34,11 @@ class User(BaseModelMixin, sql_db.Model):
     def find_by_login(cls, login: str):
         # Trying to find user by it's login
         # https://stackoverflow.com/a/8934748
-        return cls.query.filter_by(login=login).first()
+        return cls.query.filter_by(login=login).first()\
+
+    @classmethod
+    def find_by_email(cls, email: str):
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def find_by_id(cls, user_id: str):

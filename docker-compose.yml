@@ -14,8 +14,6 @@ services:
       - graduate_billing_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env-billing-example
-    ports:
-      - "5432:5432"
 
   auth_postgres:
     image: postgres:13

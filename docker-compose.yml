@@ -14,6 +14,8 @@ services:
       - graduate_billing_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env-billing-example
+    ports:
+      - "5432:5432"
 
   auth_postgres:
     image: postgres:13
@@ -72,3 +74,13 @@ services:
     restart: always
     volumes:
       - auth_redis_data:/data
+
+  transaction_scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    depends_on:
+      - billing_postgres

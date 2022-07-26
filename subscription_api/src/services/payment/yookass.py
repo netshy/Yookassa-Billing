@@ -4,7 +4,9 @@ import uuid
 from fastapi import Depends
 from yookassa import Payment
 
+from db.redis import RedisStorage
 from db.service.pg_service import PostgresService, get_db_service
+from db.storage import get_cache_storage
 from schemas.transaction import PaymentTransactionSchema
 from services.payment.base import PaymentBaseService
 
@@ -47,6 +49,7 @@ class YooKassPayment(PaymentBaseService):
 
 
 def get_payment_service(
-        storage_service: PostgresService = Depends(get_db_service)
+        storage_service: PostgresService = Depends(get_db_service),
+        cache_storage: RedisStorage = Depends(get_cache_storage)
 ) -> YooKassPayment:
-    return YooKassPayment(storage_service)
+    return YooKassPayment(storage_service, cache_storage)

@@ -21,6 +21,9 @@ class Config(BaseConfig):
     YOOKASSA_SECRET: str = os.getenv("YOOKASSA_SECRET")
     JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY")
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM")
+    REDIS_HOST: str = os.getenv("REDIS_HOST")
+    REDIS_PORT: int = os.getenv("REDIS_PORT")
+    REDIS_PASSWORD: str = os.getenv("REDIS_PASSWORD")
 
 
 billing_setting = Config()

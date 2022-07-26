@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+import aioredis
+from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from starlette.middleware.authentication import AuthenticationMiddleware
 from yookassa import Configuration
@@ -8,6 +9,7 @@ from api.v1.transactions.views import router as transaction_router
 from core.auth.middleware import CustomAuthBackend
 from db import storage
 from db.database import Base, engine, SessionLocal
+from db.redis import RedisStorage
 from settings import billing_setting
 
 app = FastAPI(
@@ -25,11 +27,20 @@ Configuration.configure(billing_setting.YOOKASSA_ID, billing_setting.YOOKASSA_SE
 async def startup():
     Base.metadata.create_all(bind=engine)
     storage.db_storage = SessionLocal()
+    storage.cache_storage = RedisStorage(
+        await aioredis.create_redis_pool(
+            (billing_setting.REDIS_HOST, billing_setting.REDIS_PORT),
+            minsize=10,
+            maxsize=20,
+            password=billing_setting.REDIS_PASSWORD,
+        )
+    )
 
 
 @app.on_event("shutdown")
 async def shutdown():
     await storage.db_storage.close()
+    await storage.cache_storage.close()
 
 
 app.include_router(subscription_plans_router, prefix="/api/billing/v1/subscription_plans", tags=["subscription_plans"])

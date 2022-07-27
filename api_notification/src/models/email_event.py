@@ -1,5 +1,6 @@
 from typing import List
 
+from models.choices import NotificationType
 from models.event import BaseEventEvent
 from orjson import orjson
 from pydantic import BaseModel
@@ -23,3 +24,11 @@ class EmailEvent(BaseEventEvent):
     class Config:
         json_loads = orjson.loads
         json_dumps = orjson_dumps
+
+
+class EmailNotificationBody(BaseModel):
+    data: DataDetail
+    subject: str
+    template_id: str
+    is_advertisement: bool
+    type: NotificationType

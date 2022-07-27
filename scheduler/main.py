@@ -56,7 +56,8 @@ def set_subscription(transaction):
             plan=transaction.plan,
             end_date=end_expired_subscription,
             status=SubscriptionStatus.ACTIVE,
-            customer_id=transaction.customer_id
+            customer_id=transaction.customer_id,
+            payment_id=transaction.session_id,
         )
         logger.info(f'for user: {transaction.customer_id} set subscription')
 

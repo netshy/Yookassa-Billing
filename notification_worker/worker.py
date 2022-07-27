@@ -4,20 +4,21 @@ from jinja2 import Environment
 from loguru import logger
 
 from db.pg_service import PostgresHelper
-from services.email_sender_service import EmailSenderService
-from services.film_service import FilmService
 from models.email_event import EmailEvent
 from models.hello_event import HelloEvent
+from models.payment_event import PaymentEvent
+from services.email_sender_service import EmailSenderService
+from services.film_service import FilmService
 from services.user_service import UserService
 
 
 class Worker:
     def __init__(
-        self,
-        pgh: PostgresHelper,
-        user_service: UserService,
-        film_service: FilmService,
-        email_sender: EmailSenderService,
+            self,
+            pgh: PostgresHelper,
+            user_service: UserService,
+            film_service: FilmService,
+            email_sender: EmailSenderService,
     ):
         self.pgh = pgh
         self.user_service = user_service
@@ -86,3 +87,9 @@ class Worker:
         env = Environment(autoescape=True)
         template_obj = env.from_string(template_html)
         return template_obj.render(**context)
+
+    def handle_payment_event(self, notification: PaymentEvent):
+        pass
+
+    def handle_refund_event(self, notification: PaymentEvent):
+        pass

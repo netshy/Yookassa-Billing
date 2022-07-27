@@ -10,6 +10,7 @@ from main import worker
 from models.choices import NotificationType
 from models.email_event import EmailEvent
 from models.hello_event import HelloEvent
+from models.payment_event import PaymentEvent
 
 
 class PikaClient:
@@ -59,6 +60,14 @@ class PikaClient:
             NotificationType.welcome_email: (
                 HelloEvent,
                 worker.handle_hello_event,
+            ),
+            NotificationType.payment_email: (
+                PaymentEvent,
+                worker.handle_payment_event,
+            ),
+            NotificationType.refund_email: (
+                PaymentEvent,
+                worker.handle_refund_event,
             ),
         }
         event_model, func = events_model[event_type]

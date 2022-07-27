@@ -14,6 +14,7 @@ class SubscriptionPlanStatusEnum(str, Enum):
 class SubscriptionStatus(str, Enum):
     Active = "Active"
     Expired = "Expired"
+    Cancelled = "Cancelled"
 
 
 class TransactionStatus(str, Enum):

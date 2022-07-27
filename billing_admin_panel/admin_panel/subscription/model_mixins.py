@@ -46,6 +46,7 @@ class SubscriptionPlanType(models.TextChoices):
 class SubscriptionStatus(models.TextChoices):
     ACTIVE = "Active"
     EXPIRED = "Expired"
+    CANCELLED = "Cancelled"
 
 
 class TransactionStatus(models.TextChoices):

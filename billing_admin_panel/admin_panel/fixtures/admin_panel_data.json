@@ -414,13 +414,14 @@
         "model": "subscription.subscription",
         "pk": "7e6a5980-c449-4793-9918-6d4bafe9abfc",
         "fields": {
-            "customer_id": "55cac6e9-2e82-4d40-a95d-80ab043b5c16",
+            "customer_id": "1839ded0-03f1-4260-8027-9b2ebafdc0b8",
             "created_at": "2022-07-21T14:48:44.450Z",
             "updated_at": "2022-07-21T14:48:44.450Z",
             "plan_id": "e3553d1a-ac0c-4485-a222-4033b3db2115",
             "start_date": "2022-07-21T14:48:44.450Z",
             "end_date": "2022-08-20T14:48:09Z",
-            "status": "Active"
+            "status": "Active",
+            "payment_id": "2a73b658-000f-5000-9000-1d8378072d88"
         }
     }
 ]

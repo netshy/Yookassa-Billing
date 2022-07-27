@@ -21,6 +21,9 @@ class SubscriptionPlanSchema(BillingBase):
     currency: str
     status: str
 
+    class Config:
+        orm_mode = True
+
 
 class SubscriptionSchema(DateTimeBase):
     customer_id: uuid.UUID
@@ -28,6 +31,10 @@ class SubscriptionSchema(DateTimeBase):
     start_date: datetime
     end_date: datetime
     status: str
+    payment_id: str
+
+    class Config:
+        orm_mode = True
 
 
 class RefundSchema(DateTimeBase):
@@ -35,6 +42,9 @@ class RefundSchema(DateTimeBase):
     customer_id: uuid.UUID
     amount: int
     status: str
+
+    class Config:
+        orm_mode = True
 
 
 class CreateSubscriptionSchema(BaseModel):

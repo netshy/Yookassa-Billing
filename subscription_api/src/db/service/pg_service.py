@@ -21,10 +21,26 @@ class PostgresService(BaseDBService):
     def get_transaction_by_id(self, transaction_id: str):
         return self.session.query(TransactionModel).filter(TransactionModel.id == transaction_id).first()
 
-    def check_active_user_subscription(self, subscription_plan_id: str, customer_id: str):
+    def get_customer_all_subscriptions(self, customer_id: str):
+        return self.session.query(SubscriptionModel).filter(SubscriptionModel.customer_id == customer_id).all()
+
+    def get_customer_subscription_by_id(self, customer_id: str, subscription_id: str):
+        return self.session.query(SubscriptionModel).filter(
+            SubscriptionModel.customer_id == customer_id,
+            SubscriptionModel.id == subscription_id,
+        ).first()
+
+    def check_active_user_subscription_plan(self, subscription_plan_id: str, customer_id: str):
         return self.session.query(SubscriptionModel).filter(
             SubscriptionModel.customer_id == customer_id,
             SubscriptionModel.plan_id == subscription_plan_id,
+            SubscriptionModel.status == "Active"
+        ).first() is not None
+
+    def check_active_user_subscription(self, subscription_id: str, customer_id: str):
+        return self.session.query(SubscriptionModel).filter(
+            SubscriptionModel.customer_id == customer_id,
+            SubscriptionModel.id == subscription_id,
             SubscriptionModel.status == "Active"
         ).first() is not None
 
@@ -38,6 +54,12 @@ class PostgresService(BaseDBService):
         return self.session.query(SubscriptionPlanModel).filter(
             SubscriptionPlanModel.id == subscription_plan_id
         ).first()
+
+    def close_subscription(self, subscription_id: str):
+        self.session.query(SubscriptionModel).filter(
+            SubscriptionModel.id == subscription_id
+        ).update({"status": "Cancelled"})
+        self.session.commit()
 
     def create_transaction(self, transaction_data: PaymentTransactionSchema):
         new_transaction = TransactionModel(

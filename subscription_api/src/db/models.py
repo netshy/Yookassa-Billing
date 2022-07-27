@@ -21,7 +21,9 @@ class SubscriptionModel(UUIDMixin, TimeStampedMixin, CustomerUUIDMixin, Base):
 
     plan_id = Column(UUID, ForeignKey("subscription_plan.id"))
     start_date = Column(DateTime)
+    end_date = Column(DateTime)
     status = Column(Enum(SubscriptionStatus))
+    payment_id = Column(String)
 
 
 class TransactionModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):

@@ -1,11 +1,13 @@
+import aiohttp
 import aioredis
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from starlette.middleware.authentication import AuthenticationMiddleware
 from yookassa import Configuration
-
+from services import http_client
 from api.v1.subscription_plans.views import router as subscription_plans_router
 from api.v1.transactions.views import router as transaction_router
+from api.v1.subscriptions.views import router as subscription_router
 from core.auth.middleware import CustomAuthBackend
 from db import storage
 from db.database import Base, engine, SessionLocal
@@ -35,6 +37,7 @@ async def startup():
             password=billing_setting.REDIS_PASSWORD,
         )
     )
+    http_client.http_client_session = aiohttp.ClientSession()
 
 
 @app.on_event("shutdown")
@@ -44,5 +47,6 @@ async def shutdown():
 
 
 app.include_router(subscription_plans_router, prefix="/api/billing/v1/subscription_plans", tags=["subscription_plans"])
+app.include_router(subscription_router, prefix="/api/billing/v1/subscriptions", tags=["subscriptions"])
 app.include_router(transaction_router, prefix="/api/billing/v1/transactions", tags=["transactions"])
 

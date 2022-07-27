@@ -43,6 +43,7 @@ class Subscription(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
         default=SubscriptionStatus.ACTIVE,
         max_length=100,
     )
+    payment_id = models.CharField(max_length=250, blank=False)
 
     class Meta:
         db_table = "subscription"
@@ -87,6 +88,6 @@ class Refund(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
 
     def __str__(self):
         return (
-            f"Refund for customer id: {self.customer_id}. Transaction id: {self.transaction_id}. "
+            f"Refund for customer id: {self.customer_id}. Transaction id: {self.transaction}. "
             f"Amount: {self.amount}. Status: {self.status}"
         )

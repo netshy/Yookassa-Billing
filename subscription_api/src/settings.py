@@ -24,6 +24,8 @@ class Config(BaseConfig):
     REDIS_HOST: str = os.getenv("REDIS_HOST")
     REDIS_PORT: int = os.getenv("REDIS_PORT")
     REDIS_PASSWORD: str = os.getenv("REDIS_PASSWORD")
+    REFUND_NOTIFICATION_URL: str = os.getenv("REFUND_NOTIFICATION_URL")
+    PAYMENT_NOTIFICATION_URL: str = os.getenv("PAYMENT_NOTIFICATION_URL")
 
 
 billing_setting = Config()

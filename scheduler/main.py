@@ -29,14 +29,14 @@ def find_processing_transactions():
     return processing_transactions
 
 
-def get_transaction_status_api(payment_id):
+def get_payment_status_api(payment_id):
     from yookassa import Payment
 
     Configuration.account_id = Config.yookassa_account_id
     Configuration.secret_key = Config.yookassa_secret_key
 
     payment = Payment.find_one(payment_id)
-    return payment.status
+    return payment
 
 
 def set_subscription(transaction):
@@ -56,16 +56,35 @@ def set_subscription(transaction):
             plan=transaction.plan,
             end_date=end_expired_subscription,
             status=SubscriptionStatus.ACTIVE,
-            customer_id=transaction.customer_id
+            customer_id=transaction.customer_id,
+            payment_id=transaction.session_id,
         )
         logger.info(f'for user: {transaction.customer_id} set subscription')
+
+
+def is_transaction_need_cancel(payment_created_at):
+    from dateutil import parser
+
+    created_at = int(parser.parse(payment_created_at).timestamp())
+    now_timestamp = int(datetime.now(pytz.timezone('Europe/Moscow')).timestamp())
+    is_old_payment = (now_timestamp - created_at) > Config.cancel_time_yookassa_payment
+    return is_old_payment
 
 
 def main():
     transactions = find_processing_transactions()
     for transaction in transactions:
-        status = get_transaction_status_api(transaction.session_id)
-        if status == YookassaTransactionStatusEnum.SUCCESS:
+        payment = get_payment_status_api(transaction.session_id)
+
+        if is_transaction_need_cancel(payment.created_at):
+            from subscription.model_mixins import TransactionStatus
+
+            transaction.status = TransactionStatus.DECLINED
+            transaction.save()
+            logger.info(f'cancelled transaction {transaction.id}, because old payment')
+            continue
+
+        if payment.status == YookassaTransactionStatusEnum.SUCCESS:
             set_subscription(transaction)
 
 

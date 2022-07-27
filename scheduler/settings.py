@@ -9,3 +9,4 @@ class Config:
     yookassa_account_id = os.getenv('YOOKASSA_ID', '927323')
     yookassa_secret_key = os.getenv('YOOKASSA_SECRET', 'test_eCG-xpTzYBoVf_XY2uf3_SEgV0P97xqMBYZs9PZXyWw')
     app_delay = os.getenv('APP_DELAY', 10)
+    cancel_time_yookassa_payment = os.getenv('CANCEL_TIME_YOOKASSA_PAYMENT', 1200)

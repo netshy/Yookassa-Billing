@@ -5,6 +5,8 @@ volumes:
   graduate_auth_postgres_data:
   static_volume:
   auth_redis_data:
+  notification_postgres_data:
+  notification_static_volume:
 
 services:
   billing_postgres:
@@ -72,3 +74,37 @@ services:
     restart: always
     volumes:
       - auth_redis_data:/data
+
+  notification_api:
+    build:
+      context: api_notification
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-notification-example
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq_service
+    env_file:
+      - .env-notification-example
+
+  admin_panel_notification:
+    build:
+      context: admin_notifications
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-notification-example
+    volumes:
+      - notification_static_volume:/admin_notifications/static
+    depends_on:
+      - postgres
+
+  notification_db:
+    image: postgres:13
+    restart: always
+    volumes:
+      - notification_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-notification-example

@@ -27,15 +27,16 @@ class Worker:
 
     def _get_template(self, template_id: str):
         template = self.pgh.get_template_html(template_id)
+
+        if not template:
+            logger.error(f"template {template_id} not found")
+            return
+        else:
+            template = template[0]
         return template
 
     def handle_email_event(self, notification: EmailEvent):
         template_db = self._get_template(notification.template_id)
-        if not template_db:
-            logger.error(f"template {notification.template_id} not found")
-            return
-        else:
-            template_db = template_db[0]
 
         film_names = [
             self.film_service.get_film_name(film_id)
@@ -55,17 +56,12 @@ class Worker:
             self.email_sender.send_email(
                 to=user_info["email"],
                 subject=template_db["subject"],
-                html=complete_template,
+                body=complete_template,
             )
             logging.info(f"Send event notification email to {user_id}")
 
     def handle_hello_event(self, notification: HelloEvent):
         template_db = self._get_template(notification.template_id)
-        if not template_db:
-            logger.error(f"template {notification.template_id} not found")
-            return
-        else:
-            template_db = template_db[0]
 
         user_info = self.user_service.get_user_info(notification.user_id)
         context = {
@@ -78,7 +74,7 @@ class Worker:
         self.email_sender.send_email(
             to=user_info["email"],
             subject=template_db["subject"],
-            html=complete_template,
+            body=complete_template,
         )
         logging.info(f"Send welcome email to {notification.user_id}")
 
@@ -88,8 +84,24 @@ class Worker:
         template_obj = env.from_string(template_html)
         return template_obj.render(**context)
 
+    def _send_billing_email(self, notification):
+        template_db = self._get_template(notification.template_id)
+        user_info = self.user_service.get_user_info(notification.user_id)
+        context = {
+            "username": user_info["username"],
+        }
+        complete_template = self._get_notification_html(
+            template_db["template_data"], context
+        )
+        self.email_sender.send_email(
+            to=user_info["email"],
+            subject=template_db["subject"],
+            body=complete_template,
+        )
+
     def handle_payment_event(self, notification: PaymentEvent):
-        pass
+        self._send_billing_email(notification)
 
     def handle_refund_event(self, notification: PaymentEvent):
-        pass
+        self._send_billing_email(notification)
+

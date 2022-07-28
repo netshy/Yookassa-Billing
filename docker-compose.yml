@@ -99,7 +99,7 @@ services:
     volumes:
       - notification_static_volume:/admin_notifications/static
     depends_on:
-      - postgres
+      - billing_postgres
 
   notification_db:
     image: postgres:13

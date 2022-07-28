@@ -67,13 +67,15 @@ services:
       - ./nginx/site.conf:/etc/nginx/conf.d/site.conf:ro
       - static_volume:/backend/static
       - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - admin_panel_web
 
   certbot:
     image: certbot/certbot
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
 
   auth_redis:
     image: redis:6.2.1

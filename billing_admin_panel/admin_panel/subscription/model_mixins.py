@@ -34,27 +34,28 @@ class CurrencyType(models.TextChoices):
 
 
 class SubscriptionPlanStatus(models.TextChoices):
-    ACTIVE = "Active"
-    ARCHIVED = "Archived"
+    ACTIVE = "active"
+    ARCHIVED = "archived"
 
 
 class SubscriptionPlanType(models.TextChoices):
-    BASIC = "Basic"
-    OPTIONAL = "Optional"
+    BASIC = "basic"
+    OPTIONAL = "optional"
 
 
 class SubscriptionStatus(models.TextChoices):
-    ACTIVE = "Active"
-    EXPIRED = "Expired"
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    CANCELLED = "cancelled"
 
 
 class TransactionStatus(models.TextChoices):
-    PROCESSING = "Processing"
-    PAID = "Paid"
-    DECLINED = "Declined"
+    PROCESSING = "processing"
+    PAID = "paid"
+    DECLINED = "declined"
 
 
 class RefundStatus(models.TextChoices):
-    PROCESSING = "Processing"
-    APPROVED = "Approved"
-    DECLINED = "Declined"
+    PROCESSING = "processing"
+    SUCCEEDED = "succeeded"
+    DECLINED = "declined"

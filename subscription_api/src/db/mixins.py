@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, func
+from sqlalchemy import Column, DateTime, func, String
 from sqlalchemy.dialects.postgresql import UUID
 
 
@@ -15,7 +15,7 @@ class UUIDMixin:
 
 
 class CustomerUUIDMixin:
-    customer_id = Column()
+    customer_id = Column(String)
 
 
 class TimeStampedMixin:

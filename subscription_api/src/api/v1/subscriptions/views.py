@@ -5,10 +5,11 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 
 from core.auth.wrapper import login_required
 from db.service.pg_service import PostgresService, get_db_service
-from services.http_service import HttpService, get_http_service
 from schemas.subscription_schema import SubscriptionSchema
+from services.http_service import HttpService, get_http_service
 from services.payment.yookass import YooKassPayment, get_payment_service
 from .messages import SUBSCRIPTION_NOT_EXIST, CANT_REFUND_SUBSCRIPTION
+from .types import PaymentType
 
 router = APIRouter()
 
@@ -60,4 +61,9 @@ async def cancel_subscription(
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT, detail=CANT_REFUND_SUBSCRIPTION
         )
-    # await http_service.send_user_payment_notification(customer_id=request.user.id, is_successful=True)
+    await http_service.send_user_payment_notification(
+        customer_id=request.user.id,
+        is_successful=True,
+        notification_type=PaymentType.REFUND
+    )
+

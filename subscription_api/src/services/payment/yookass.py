@@ -75,6 +75,19 @@ class YooKassPayment(PaymentBaseService):
             return True
         return False
 
+    async def handle_callback(self, callback_data: dict):
+        event_type = callback_data["event"]
+        data_object = callback_data["object"]
+
+        if event_type == "payment.succeeded":
+            transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
+            self.storage_service.set_transaction_as_active(transaction.id)
+            self.storage_service.create_user_subscription(transaction)
+        elif event_type == "payment.canceled":
+            pass
+        elif event_type == "refund.succeeded":
+            pass
+
 
 def get_payment_service(
         storage_service: PostgresService = Depends(get_db_service),

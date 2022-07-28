@@ -17,9 +17,9 @@ class BaseDBService(ABC):
         pass
 
     @abstractmethod
-    def get_all_transactions(self):
+    def get_all_user_transactions(self, customer_id: str):
         pass
 
     @abstractmethod
-    def get_transaction_by_id(self, transaction_id):
+    def get_user_transaction_by_id(self, transaction_id: str, customer_id: str):
         pass

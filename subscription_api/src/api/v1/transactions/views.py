@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from api.v1.transactions.messages import ALREADY_EXIST
 from core.auth.wrapper import login_required
 from db.service.pg_service import PostgresService, get_db_service
+from services.http_service import HttpService, get_http_service
 from schemas.subscription_schema import CreateSubscriptionSchema
 from schemas.transaction import TransactionSchema, TransactionConfirmationUrl
 from services.payment.yookass import YooKassPayment, get_payment_service
@@ -15,14 +16,17 @@ router = APIRouter()
 
 @router.get("/", response_model=List[TransactionSchema])
 @login_required()
-def transactions_list(db_service: PostgresService = Depends(get_db_service)):
-    transactions = db_service.get_all_transactions()
+def transactions_list(
+        request: Request,
+        db_service: PostgresService = Depends(get_db_service)
+):
+    transactions = db_service.get_all_user_transactions(request.user.id)
     return transactions
 
 
 @router.post("/", response_model=TransactionConfirmationUrl)
 @login_required()
-async def create_subscription(
+async def create_transaction(
         request: Request,
         data: CreateSubscriptionSchema,
         db_service: PostgresService = Depends(get_db_service),
@@ -45,8 +49,25 @@ async def create_subscription(
     return TransactionConfirmationUrl(confirmation_url=data)
 
 
+@router.post("/yookas_callback", status_code=HTTPStatus.OK)
+async def yookas_callback(
+        request: Request,
+        payment_service: YooKassPayment = Depends(get_payment_service),
+        http_service: HttpService = Depends(get_http_service)
+):
+    data = await request.json()
+    await payment_service.handle_callback(data)
+
+
+
 @router.get("/{transaction_id}", response_model=TransactionSchema)
 @login_required()
-def transaction_get(transaction_id: str, db_service: PostgresService = Depends(get_db_service)):
-    transaction = db_service.get_transaction_by_id(transaction_id)
+def transaction_get(
+        transaction_id: str,
+        request: Request,
+        db_service: PostgresService = Depends(get_db_service)
+):
+    transaction = db_service.get_user_transaction_by_id(transaction_id, request.user.id)
     return transaction
+
+

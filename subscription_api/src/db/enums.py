@@ -7,23 +7,23 @@ class CurrencyTypeEnum(str, Enum):
 
 
 class SubscriptionPlanStatusEnum(str, Enum):
-    Active = "Active"
-    Archived = "Archived"
+    Active = "active"
+    Archived = "archived"
 
 
 class SubscriptionStatus(str, Enum):
-    Active = "Active"
-    Expired = "Expired"
-    Cancelled = "Cancelled"
+    Active = "active"
+    Expired = "expired"
+    Cancelled = "cancelled"
 
 
 class TransactionStatus(str, Enum):
-    Pending = "pending"
+    Processing = "processing"
     Paid = "paid"
     Declined = "declined"
 
 
 class RefundStatus(str, Enum):
-    Processing = "Processing"
-    Approved = "Approved"
-    Declined = "Declined"
+    Processing = "processing"
+    Approved = "approved"
+    Declined = "declined"

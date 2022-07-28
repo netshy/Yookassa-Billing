@@ -40,6 +40,6 @@ class TransactionModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):
 class RefundModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):
     __tablename__ = "refund"
 
-    transaction_id = Column(UUID, ForeignKey("transaction.id"))
+    payment_id = Column(String)
     amount = Column(Integer)
     status = Column(String)

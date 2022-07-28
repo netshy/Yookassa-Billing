@@ -1,13 +1,13 @@
-import uuid
 from datetime import datetime, timedelta
 
 from fastapi import Depends
 
 from db.database import SessionLocal
-from db.enums import SubscriptionStatus, TransactionStatus
-from db.models import SubscriptionPlanModel, TransactionModel, SubscriptionModel
+from db.enums import SubscriptionStatus, TransactionStatus, RefundStatus
+from db.models import SubscriptionPlanModel, TransactionModel, SubscriptionModel, RefundModel
 from db.service.base import BaseDBService
 from db.storage import get_db
+from schemas.subscription_schema import RefundSchema
 from schemas.transaction import PaymentTransactionSchema
 
 
@@ -55,7 +55,7 @@ class PostgresService(BaseDBService):
         return self.session.query(SubscriptionModel).filter(
             SubscriptionModel.customer_id == customer_id,
             SubscriptionModel.id == subscription_id,
-            SubscriptionModel.status == "Active"
+            SubscriptionModel.status == "active"
         ).first() is not None
 
     def check_processing_transaction(self, customer_id: str):
@@ -72,7 +72,7 @@ class PostgresService(BaseDBService):
     def close_subscription(self, subscription_id: str):
         self.session.query(SubscriptionModel).filter(
             SubscriptionModel.id == subscription_id
-        ).update({"status": "Cancelled"})
+        ).update({"status": SubscriptionStatus.Cancelled, "end_date": datetime.now()})
         self.session.commit()
 
     def create_transaction(self, transaction_data: PaymentTransactionSchema):
@@ -87,6 +87,35 @@ class PostgresService(BaseDBService):
             TransactionModel.id == transaction_id
         ).update({"status": TransactionStatus.Paid, "paid": True})
         self.session.commit()
+
+    def set_transaction_as_declined(self, transaction_id: str):
+        self.session.query(TransactionModel).filter(
+            TransactionModel.id == transaction_id
+        ).update({"status": TransactionStatus.Declined})
+        self.session.commit()
+
+    def create_refund(self, refund: RefundSchema):
+        new_refund = RefundModel(
+            **refund.dict()
+        )
+        self.session.add(new_refund)
+        self.session.commit()
+
+    def set_refund_as_succeeded(self, refund_id: str):
+        self.session.query(RefundModel).filter(
+            RefundModel.id == refund_id
+        ).update({"status": RefundStatus.Approved})
+
+    def get_customer_all_refunds(self, customer_id: str):
+        return self.session.query(RefundModel).filter(
+            RefundModel.customer_id == customer_id
+        ).all()
+
+    def get_customer_refund_by_id(self, customer_id: str, refund_id:str):
+        return self.session.query(RefundModel).filter(
+            RefundModel.customer_id == customer_id,
+            RefundModel.id == refund_id
+        ).first()
 
     def create_user_subscription(self, transaction: TransactionModel):
         plan: SubscriptionPlanModel = self.session.query(SubscriptionPlanModel).filter(
@@ -103,6 +132,11 @@ class PostgresService(BaseDBService):
         )
         self.session.add(new_user_subscription)
         self.session.commit()
+
+    def cancel_user_subscription_by_payment_id(self, payment_id: str):
+        self.session.query(SubscriptionModel).filter(
+            SubscriptionModel.payment_id == payment_id
+        ).update({"status": SubscriptionStatus.Cancelled, "end_date": datetime.now()})
 
 def get_db_service(
         session: SessionLocal = Depends(get_db),

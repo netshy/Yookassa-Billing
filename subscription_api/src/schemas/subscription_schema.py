@@ -1,5 +1,7 @@
 from datetime import datetime
 import uuid
+from typing import Optional, Union
+
 from pydantic import BaseModel
 
 
@@ -11,8 +13,8 @@ class BillingBase(BaseModel):
 
 
 class DateTimeBase(BillingBase):
-    create_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
 
 
 class SubscriptionPlanSchema(BillingBase):
@@ -38,8 +40,8 @@ class SubscriptionSchema(DateTimeBase):
 
 
 class RefundSchema(DateTimeBase):
-    transaction_id: uuid.UUID
-    customer_id: uuid.UUID
+    payment_id: str
+    customer_id: Union[str, uuid.UUID]
     amount: int
     status: str
 

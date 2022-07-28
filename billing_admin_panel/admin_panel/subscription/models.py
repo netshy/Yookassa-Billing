@@ -75,9 +75,7 @@ class Transaction(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
 
 
 class Refund(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
-    transaction = models.ForeignKey(
-        "Transaction", on_delete=models.CASCADE, related_name="refunds"
-    )
+    payment_id = models.CharField(max_length=250, blank=False)
     amount = models.IntegerField()
     status = models.CharField(
         choices=RefundStatus.choices, default=RefundStatus.PROCESSING, max_length=100
@@ -88,6 +86,6 @@ class Refund(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin):
 
     def __str__(self):
         return (
-            f"Refund for customer id: {self.customer_id}. Transaction id: {self.transaction}. "
+            f"Refund for customer id: {self.customer_id}. Transaction id: {self.payment_id}. "
             f"Amount: {self.amount}. Status: {self.status}"
         )

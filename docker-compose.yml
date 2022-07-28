@@ -53,6 +53,7 @@ services:
     env_file:
       - .env-billing-example
     depends_on:
+      - admin_panel_web
       - billing_postgres
 
   nginx:
@@ -73,12 +74,12 @@ services:
     volumes:
       - auth_redis_data:/data
 
-#  transaction_scheduler:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    restart: always
-#    env_file:
-#      - .env-billing-example
-#    depends_on:
-#      - billing_postgres
+  transaction_scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    depends_on:
+      - billing_postgres

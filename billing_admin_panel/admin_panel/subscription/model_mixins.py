@@ -57,5 +57,5 @@ class TransactionStatus(models.TextChoices):
 
 class RefundStatus(models.TextChoices):
     PROCESSING = "processing"
-    APPROVED = "approved"
+    SUCCEEDED = "succeeded"
     DECLINED = "declined"

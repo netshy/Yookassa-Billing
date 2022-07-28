@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/", response_model=List[SubscriptionSchema])
 @login_required()
-def subscriptions_list(
+async def subscriptions_list(
         request: Request,
         db_service: PostgresService = Depends(get_db_service)
 ):
@@ -26,7 +26,7 @@ def subscriptions_list(
 
 @router.get("/{subscription_id}", response_model=SubscriptionSchema)
 @login_required()
-def get_subscription(
+async def get_subscription(
         subscription_id: str,
         request: Request,
         db_service: PostgresService = Depends(get_db_service)
@@ -61,9 +61,9 @@ async def cancel_subscription(
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT, detail=CANT_REFUND_SUBSCRIPTION
         )
-    await http_service.send_user_payment_notification(
-        customer_id=request.user.id,
-        is_successful=True,
-        notification_type=PaymentType.REFUND
-    )
+    # await http_service.send_user_payment_notification(
+    #     customer_id=request.user.id,
+    #     is_successful=True,
+    #     notification_type=PaymentType.REFUND.value
+    # )
 

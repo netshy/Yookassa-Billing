@@ -3,6 +3,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 
+from api.v1.subscriptions.types import PaymentType
 from api.v1.transactions.messages import ALREADY_EXIST
 from core.auth.wrapper import login_required
 from db.service.pg_service import PostgresService, get_db_service
@@ -16,7 +17,7 @@ router = APIRouter()
 
 @router.get("/", response_model=List[TransactionSchema])
 @login_required()
-def transactions_list(
+async def transactions_list(
         request: Request,
         db_service: PostgresService = Depends(get_db_service)
 ):
@@ -56,13 +57,17 @@ async def yookas_callback(
         http_service: HttpService = Depends(get_http_service)
 ):
     data = await request.json()
-    await payment_service.handle_callback(data)
-
+    payment_type, is_successful = await payment_service.handle_callback(data)
+    # await http_service.send_user_payment_notification(
+    #     customer_id=request.user.id,
+    #     is_successful=is_successful,
+    #     notification_type=PaymentType.get_type(payment_type).value
+    # )
 
 
 @router.get("/{transaction_id}", response_model=TransactionSchema)
 @login_required()
-def transaction_get(
+async def transaction_get(
         transaction_id: str,
         request: Request,
         db_service: PostgresService = Depends(get_db_service)

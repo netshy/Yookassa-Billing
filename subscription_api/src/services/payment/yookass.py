@@ -1,12 +1,19 @@
 import json
+from typing import Tuple
+
+from dateutil import parser
 import uuid
 
 from fastapi import Depends
 from yookassa import Payment, Refund
 import datetime as dt
+
+from yookassa.domain.exceptions import BadRequestError
+
 from db.redis import RedisStorage
 from db.service.pg_service import PostgresService, get_db_service
 from db.storage import get_cache_storage
+from schemas.subscription_schema import RefundSchema
 from schemas.transaction import PaymentTransactionSchema
 from services.payment.base import PaymentBaseService
 
@@ -51,7 +58,7 @@ class YooKassPayment(PaymentBaseService):
         )
         return payment.confirmation.confirmation_url
 
-    async def cancel_subscription(self, user_id: str, subscription_id) -> bool:
+    async def cancel_subscription(self, user_id: str, subscription_id: str) -> bool:
         subscription = self.storage_service.get_customer_subscription_by_id(user_id, subscription_id)
         # we refund money only if there is at least more than 10 days left unlit subscription end
         days_left = (subscription.end_date - dt.datetime.now(tz=dt.timezone.utc)).days
@@ -60,33 +67,55 @@ class YooKassPayment(PaymentBaseService):
 
         subscription_plan = self.storage_service.get_subscription_plan(subscription.plan_id)
         payment_id = subscription.payment_id
-        amount_to_refund = subscription_plan.price / days_left
-        refund = Refund.create(
-            {
-                "amount": {
-                    "value": amount_to_refund,
-                    "currency": "RUB"
-                },
-                "payment_id": payment_id
-            }
+        amount_to_refund = (subscription_plan.price/subscription_plan.duration)*days_left
+        try:
+            refund = Refund.create(
+                {
+                    "amount": {
+                        "value": amount_to_refund,
+                        "currency": "RUB"
+                    },
+                    "payment_id": payment_id
+                }
+            )
+        except BadRequestError:
+            return False
+        formatted_refund = RefundSchema(
+            id=refund.id,
+            payment_id=refund.payment_id,
+            customer_id=user_id,
+            amount=float(refund.amount.value),
+            status=refund.status,
+            created_at=parser.parse(refund.created_at)
         )
+        self.storage_service.create_refund(formatted_refund)
         if refund.status == "succeeded":
             self.storage_service.close_subscription(subscription_id)
             return True
         return False
 
-    async def handle_callback(self, callback_data: dict):
+    async def handle_callback(self, callback_data: dict) -> Tuple[str, bool]:
+        types = {
+            "payment.succeeded": "payment",
+            "payment.canceled": "payment",
+            "refund.succeeded": "refund"
+        }
         event_type = callback_data["event"]
         data_object = callback_data["object"]
+        return_type = types[event_type]
 
         if event_type == "payment.succeeded":
             transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
             self.storage_service.set_transaction_as_active(transaction.id)
             self.storage_service.create_user_subscription(transaction)
+            return return_type, True
         elif event_type == "payment.canceled":
-            pass
+            self.storage_service.set_transaction_as_declined(data_object["id"])
+            return return_type, False
         elif event_type == "refund.succeeded":
-            pass
+            self.storage_service.set_refund_as_succeeded(data_object["id"])
+            self.storage_service.cancel_user_subscription_by_payment_id(data_object["payment_id"])
+            return return_type, True
 
 
 def get_payment_service(

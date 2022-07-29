@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "0c7cc524-f131-4ff3-a33d-f67a45687afb",
+		"name": "Yookassa Billing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"superpupermolodec\",\n    \"email\": \"example@gmail.com\",\n    \"password\": \"1\",\n    \"password_confirmation\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://billingpracticum.ru/auth/api/v1/user/registration",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"auth",
+						"api",
+						"v1",
+						"user",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"superpupermolodec\",\n    \"password\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://billingpracticum.ru/auth/api/v1/user/login",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"auth",
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get subscription plans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1OTEwMjExNSwianRpIjoiNmRjMGU2ZWYtMTdlMC00ZTk4LWIyNGEtMTg0OWU2ZTVkOTk3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjE1Yjg5ZWQ3LTE4ODgtNGU4Ni05M2VlLWNlNWY4ZDk1Njg2ZCIsIm5iZiI6MTY1OTEwMjExNSwiZXhwIjoxNjU5MjAyMTE0LCJsb2dpbiI6InoiLCJyb2xlcyI6W10sInNlc3Npb25faWQiOiJjNTU4Y2RlZS0yYTQxLTRkZTMtYjczYy1mZDhkMzdhZGJlNjIifQ.AzuUqnhzzk9BS_tVAG67IEEHWRN_NvHyqdBbmsv9P8c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"olega\",\n    \"password\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://billingpracticum.ru/subscription/api/billing/v1/subscription_plans",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"subscription",
+						"api",
+						"billing",
+						"v1",
+						"subscription_plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create yookassa link",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1OTEwNTM1NywianRpIjoiN2IwOTIxMjMtYTA2My00NDBmLTg3ZDYtZTJhNzE1ZDRjM2RiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ2M2Q4MTNkLTVlM2UtNGY5Ni1iYjU2LWQ1YjBhOGIwNzMwZiIsIm5iZiI6MTY1OTEwNTM1NywiZXhwIjoxNjU5MjA1MzU2LCJsb2dpbiI6Iml2YW4iLCJyb2xlcyI6W10sInNlc3Npb25faWQiOiIxYTQ5NDdiMy1hNGU1LTRjNGQtYWI3Zi02OTY2MGM4NDM3MTAifQ.YMvyqC4fB6vUzOh3tzMHulmvCrdH1ge9axRJvF8JIoM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"subscription_plan_id\": \"7a622ac4-fcad-48ee-b7a4-794e90df6ae0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://billingpracticum.ru/subscription/api/billing/v1/transactions/",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"subscription",
+						"api",
+						"billing",
+						"v1",
+						"transactions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get detail info subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1OTA4OTMyNSwianRpIjoiNTRlZDI4OWUtMTM1Ny00MTMxLWI3NjAtZjVmODczZWM4OThlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImNjZjhmNDU5LTM1YTAtNGZkMi1hYWM1LWViYWVmZjJhYzg3MyIsIm5iZiI6MTY1OTA4OTMyNSwiZXhwIjoxNjU5MTg5MzI0LCJsb2dpbiI6Iml2YW4iLCJyb2xlcyI6W10sInNlc3Npb25faWQiOiIxMmQ2ZDhkMC1lMzg2LTRhNDQtYWRkNS0wMzAwNzMwOTc1NTMifQ.vhNt6hkXLnxh00MJtxk2fTjf3WLUuzhG-p2r0jV46PE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://billingpracticum.ru/subscription/api/billing/v1/subscriptions",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"subscription",
+						"api",
+						"billing",
+						"v1",
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make a refund",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1OTEwNTM1NywianRpIjoiN2IwOTIxMjMtYTA2My00NDBmLTg3ZDYtZTJhNzE1ZDRjM2RiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ2M2Q4MTNkLTVlM2UtNGY5Ni1iYjU2LWQ1YjBhOGIwNzMwZiIsIm5iZiI6MTY1OTEwNTM1NywiZXhwIjoxNjU5MjA1MzU2LCJsb2dpbiI6Iml2YW4iLCJyb2xlcyI6W10sInNlc3Npb25faWQiOiIxYTQ5NDdiMy1hNGU1LTRjNGQtYWI3Zi02OTY2MGM4NDM3MTAifQ.YMvyqC4fB6vUzOh3tzMHulmvCrdH1ge9axRJvF8JIoM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://billingpracticum.ru/subscription/api/billing/v1/subscriptions/dabb5022-b16c-4505-8964-4b1d594872a4",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"subscription",
+						"api",
+						"billing",
+						"v1",
+						"subscriptions",
+						"dabb5022-b16c-4505-8964-4b1d594872a4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get refund info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1OTEwNTM1NywianRpIjoiN2IwOTIxMjMtYTA2My00NDBmLTg3ZDYtZTJhNzE1ZDRjM2RiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ2M2Q4MTNkLTVlM2UtNGY5Ni1iYjU2LWQ1YjBhOGIwNzMwZiIsIm5iZiI6MTY1OTEwNTM1NywiZXhwIjoxNjU5MjA1MzU2LCJsb2dpbiI6Iml2YW4iLCJyb2xlcyI6W10sInNlc3Npb25faWQiOiIxYTQ5NDdiMy1hNGU1LTRjNGQtYWI3Zi02OTY2MGM4NDM3MTAifQ.YMvyqC4fB6vUzOh3tzMHulmvCrdH1ge9axRJvF8JIoM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://billingpracticum.ru/subscription/api/billing/v1/subscriptions/dabb5022-b16c-4505-8964-4b1d594872a4",
+					"protocol": "https",
+					"host": [
+						"billingpracticum",
+						"ru"
+					],
+					"path": [
+						"subscription",
+						"api",
+						"billing",
+						"v1",
+						"subscriptions",
+						"dabb5022-b16c-4505-8964-4b1d594872a4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

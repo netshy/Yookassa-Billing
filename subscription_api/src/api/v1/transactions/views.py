@@ -58,11 +58,11 @@ async def yookas_callback(
 ):
     data = await request.json()
     payment_type, is_successful = await payment_service.handle_callback(data)
-    # await http_service.send_user_payment_notification(
-    #     customer_id=request.user.id,
-    #     is_successful=is_successful,
-    #     notification_type=PaymentType.get_type(payment_type).value
-    # )
+    await http_service.send_user_payment_notification(
+        customer_id=request.user.id,
+        is_successful=is_successful,
+        notification_type=PaymentType.get_type(payment_type).value
+    )
 
 
 @router.get("/{transaction_id}", response_model=TransactionSchema)

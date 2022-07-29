@@ -19,6 +19,11 @@ class UserServiceStub(object):
                 request_serializer=user__pb2.UserRequest.SerializeToString,
                 response_deserializer=user__pb2.UserReply.FromString,
                 )
+        self.GetUserByID = channel.unary_unary(
+                '/user.UserService/GetUserByID',
+                request_serializer=user__pb2.UserIDRequest.SerializeToString,
+                response_deserializer=user__pb2.UserReply.FromString,
+                )
 
 
 class UserServiceServicer(object):
@@ -30,12 +35,23 @@ class UserServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetUserByID(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetUser': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUser,
                     request_deserializer=user__pb2.UserRequest.FromString,
+                    response_serializer=user__pb2.UserReply.SerializeToString,
+            ),
+            'GetUserByID': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetUserByID,
+                    request_deserializer=user__pb2.UserIDRequest.FromString,
                     response_serializer=user__pb2.UserReply.SerializeToString,
             ),
     }
@@ -61,6 +77,23 @@ class UserService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/user.UserService/GetUser',
             user__pb2.UserRequest.SerializeToString,
+            user__pb2.UserReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetUserByID(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/user.UserService/GetUserByID',
+            user__pb2.UserIDRequest.SerializeToString,
             user__pb2.UserReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

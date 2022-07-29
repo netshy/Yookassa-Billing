@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import services.grpc_client.user_pb2 as user__pb2
+import user_pb2 as user__pb2
 
 
-class UserStub(object):
+class UserServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,74 +14,58 @@ class UserStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetInfo = channel.unary_unary(
-                '/user.User/GetInfo',
-                request_serializer=user__pb2.UserInfoRequest.SerializeToString,
-                response_deserializer=user__pb2.UserInfoReply.FromString,
+        self.GetUser = channel.unary_unary(
+                '/user.UserService/GetUser',
+                request_serializer=user__pb2.UserRequest.SerializeToString,
+                response_deserializer=user__pb2.UserReply.FromString,
                 )
-        self.GetName = channel.unary_unary(
-                '/user.User/GetName',
-                request_serializer=user__pb2.UserViewRequest.SerializeToString,
-                response_deserializer=user__pb2.UserViewReply.FromString,
-                )
-        self.GetProfileInfo = channel.unary_unary(
-                '/user.User/GetProfileInfo',
-                request_serializer=user__pb2.ProfileInfoRequest.SerializeToString,
-                response_deserializer=user__pb2.ProfileInfoReply.FromString,
+        self.GetUserByID = channel.unary_unary(
+                '/user.UserService/GetUserByID',
+                request_serializer=user__pb2.UserIDRequest.SerializeToString,
+                response_deserializer=user__pb2.UserReply.FromString,
                 )
 
 
-class UserServicer(object):
+class UserServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetInfo(self, request, context):
+    def GetUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetName(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetProfileInfo(self, request, context):
+    def GetUserByID(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_UserServicer_to_server(servicer, server):
+def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetInfo': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetInfo,
-                    request_deserializer=user__pb2.UserInfoRequest.FromString,
-                    response_serializer=user__pb2.UserInfoReply.SerializeToString,
+            'GetUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetUser,
+                    request_deserializer=user__pb2.UserRequest.FromString,
+                    response_serializer=user__pb2.UserReply.SerializeToString,
             ),
-            'GetName': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetName,
-                    request_deserializer=user__pb2.UserViewRequest.FromString,
-                    response_serializer=user__pb2.UserViewReply.SerializeToString,
-            ),
-            'GetProfileInfo': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetProfileInfo,
-                    request_deserializer=user__pb2.ProfileInfoRequest.FromString,
-                    response_serializer=user__pb2.ProfileInfoReply.SerializeToString,
+            'GetUserByID': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetUserByID,
+                    request_deserializer=user__pb2.UserIDRequest.FromString,
+                    response_serializer=user__pb2.UserReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'user.User', rpc_method_handlers)
+            'user.UserService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class User(object):
+class UserService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetInfo(request,
+    def GetUser(request,
             target,
             options=(),
             channel_credentials=None,
@@ -91,14 +75,14 @@ class User(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/user.User/GetInfo',
-            user__pb2.UserInfoRequest.SerializeToString,
-            user__pb2.UserInfoReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/user.UserService/GetUser',
+            user__pb2.UserRequest.SerializeToString,
+            user__pb2.UserReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetName(request,
+    def GetUserByID(request,
             target,
             options=(),
             channel_credentials=None,
@@ -108,25 +92,8 @@ class User(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/user.User/GetName',
-            user__pb2.UserViewRequest.SerializeToString,
-            user__pb2.UserViewReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetProfileInfo(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/user.User/GetProfileInfo',
-            user__pb2.ProfileInfoRequest.SerializeToString,
-            user__pb2.ProfileInfoReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/user.UserService/GetUserByID',
+            user__pb2.UserIDRequest.SerializeToString,
+            user__pb2.UserReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

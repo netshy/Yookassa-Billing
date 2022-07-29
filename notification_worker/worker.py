@@ -65,7 +65,7 @@ class Worker:
 
         user_info = self.user_service.get_user_info(notification.user_id)
         context = {
-            "username": user_info["username"],
+            "username": user_info["login"],
             "email": user_info["email"],
         }
         complete_template = self._get_notification_html(
@@ -88,7 +88,7 @@ class Worker:
         template_db = self._get_template(notification.template_id)
         user_info = self.user_service.get_user_info(notification.user_id)
         context = {
-            "username": user_info["username"],
+            "username": user_info["login"],
         }
         complete_template = self._get_notification_html(
             template_db["template_data"], context

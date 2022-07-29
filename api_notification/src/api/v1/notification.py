@@ -98,4 +98,3 @@ async def publish_refund_event_to_queue(request: UserPaymentNotification):
         raise HTTPException(status_code=http.HTTPStatus.INTERNAL_SERVER_ERROR)
 
     return Response(status_code=201)
-PikaClient

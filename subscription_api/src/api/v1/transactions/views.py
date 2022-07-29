@@ -57,9 +57,9 @@ async def yookas_callback(
         http_service: HttpService = Depends(get_http_service)
 ):
     data = await request.json()
-    payment_type, is_successful = await payment_service.handle_callback(data)
+    payment_type, customer_id, is_successful = await payment_service.handle_callback(data)
     await http_service.send_user_payment_notification(
-        customer_id=request.user.id,
+        customer_id=customer_id,
         is_successful=is_successful,
         notification_type=PaymentType.get_type(payment_type).value
     )

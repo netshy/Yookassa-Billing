@@ -94,7 +94,7 @@ class YooKassPayment(PaymentBaseService):
             return True
         return False
 
-    async def handle_callback(self, callback_data: dict) -> Tuple[str, bool]:
+    async def handle_callback(self, callback_data: dict) -> Tuple[str, str, bool]:
         types = {
             "payment.succeeded": "payment",
             "payment.canceled": "payment",
@@ -108,14 +108,16 @@ class YooKassPayment(PaymentBaseService):
             transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
             self.storage_service.set_transaction_as_active(transaction.id)
             self.storage_service.create_user_subscription(transaction)
-            return return_type, True
+            return return_type, transaction.customer_id, True
         elif event_type == "payment.canceled":
+            transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
             self.storage_service.set_transaction_as_declined(data_object["id"])
-            return return_type, False
+            return return_type, transaction.customer_id, False
         elif event_type == "refund.succeeded":
+            refund = self.storage_service.get_refund_by_id(data_object["id"])
             self.storage_service.set_refund_as_succeeded(data_object["id"])
             self.storage_service.cancel_user_subscription_by_payment_id(data_object["payment_id"])
-            return return_type, True
+            return return_type, refund.customer_id, True
 
 
 def get_payment_service(

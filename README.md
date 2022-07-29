@@ -1,4 +1,5 @@
 # Yookassa-Billing 
+https://github.com/netshy/graduate_work
 ## Yandex Practicum graduate work
 ##### Проект реализован в качестве дипломного задания на курсе middle python 
 ![](https://i.ibb.co/60Pnnbt/image.png)

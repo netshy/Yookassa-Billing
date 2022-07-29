@@ -61,9 +61,9 @@ async def cancel_subscription(
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT, detail=CANT_REFUND_SUBSCRIPTION
         )
-    # await http_service.send_user_payment_notification(
-    #     customer_id=request.user.id,
-    #     is_successful=True,
-    #     notification_type=PaymentType.REFUND.value
-    # )
+    await http_service.send_user_payment_notification(
+        customer_id=request.user.id,
+        is_successful=True,
+        notification_type=PaymentType.REFUND.value
+    )
 

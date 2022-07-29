@@ -24,4 +24,9 @@ class UserService:
                     "username": fake.name(),
                     "email": fake.email(),
                 }
+            else:
+                user_info = {
+                    "username": user_info.login,
+                    "email": user_info.email,
+                }
             return user_info

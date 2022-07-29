@@ -24,7 +24,7 @@ def main():
         while True:
             rabbitmq_broker.listen_events()
     finally:
-        rabbitmq_broker.channel.close()
+        rabbitmq_broker.connection.close()
 
 
 if __name__ == "__main__":

@@ -111,9 +111,14 @@ class PostgresService(BaseDBService):
             RefundModel.customer_id == customer_id
         ).all()
 
-    def get_customer_refund_by_id(self, customer_id: str, refund_id:str):
+    def get_customer_refund_by_id(self, customer_id: str, refund_id: str):
         return self.session.query(RefundModel).filter(
             RefundModel.customer_id == customer_id,
+            RefundModel.id == refund_id
+        ).first()
+
+    def get_refund_by_id(self, refund_id: str):
+        return self.session.query(RefundModel).filter(
             RefundModel.id == refund_id
         ).first()
 

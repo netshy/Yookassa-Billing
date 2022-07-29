@@ -14,7 +14,7 @@ class HttpService:
             "refund": billing_setting.REFUND_NOTIFICATION_URL,
             "payment": billing_setting.PAYMENT_NOTIFICATION_URL
         }
-        data = {"user_id": customer_id, "is_successful": is_successful}
+        data = {"user_id": customer_id, "is_success": is_successful}
         url = notification_urls[notification_type]
         await self.session.post(url, json=data)
 

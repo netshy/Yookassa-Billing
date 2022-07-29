@@ -1,0 +1,125 @@
+version: '3.8'
+
+volumes:
+  graduate_billing_postgres_data:
+  graduate_auth_postgres_data:
+  static_volume:
+  auth_redis_data:
+  notification_postgres_data:
+  notification_static_volume:
+
+services:
+  billing_postgres:
+    image: postgres:13
+    restart: always
+    volumes:
+      - graduate_billing_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-billing-example
+
+  auth_postgres:
+    image: postgres:13
+    restart: always
+    volumes:
+      - graduate_auth_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-auth-example
+
+  admin_panel_web:
+    build:
+      context: billing_admin_panel
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    volumes:
+      - static_volume:/billing_admin/static
+    depends_on:
+      - billing_postgres
+
+  flask_auth_web:
+    build:
+      context: ./auth_app
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-auth-example
+    depends_on:
+      - auth_redis
+
+  subscription_api_web:
+    build:
+      context: subscription_api
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    depends_on:
+      - admin_panel_web
+      - billing_postgres
+
+  nginx:
+    image: nginx:1.22.0
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf:ro
+      - static_volume:/backend/static
+      - ./certbot/www:/var/www/certbot/
+      - ./certbot/conf/:/etc/nginx/ssl/
+    depends_on:
+      - admin_panel_web
+
+
+  auth_redis:
+    image: redis:6.2.1
+    command: redis-server --requirepass 123qwe
+    restart: always
+    volumes:
+      - auth_redis_data:/data
+
+  transaction_scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-billing-example
+    depends_on:
+      - billing_postgres
+      
+  notification_api:
+    build:
+      context: api_notification
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-notification-example
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq_service
+    env_file:
+      - .env-notification-example
+
+  admin_panel_notification:
+    build:
+      context: admin_notifications
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env-notification-example
+    volumes:
+      - notification_static_volume:/admin_notifications/static
+    depends_on:
+      - billing_postgres
+
+  notification_db:
+    image: postgres:13
+    restart: always
+    volumes:
+      - notification_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-notification-example

@@ -4,8 +4,8 @@ import grpc
 from faker import Faker
 from faker.providers import internet
 
-from worker.config import config
-from worker.services.grpc_client import user_pb2, user_pb2_grpc
+from config import config
+from services.grpc_client import user_pb2, user_pb2_grpc
 
 fake = Faker()
 fake.add_provider(internet)

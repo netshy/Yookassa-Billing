@@ -89,7 +89,7 @@ services:
       - .env-billing-example
     depends_on:
       - billing_postgres
-      
+
   notification_api:
     build:
       context: api_notification
@@ -121,5 +121,13 @@ services:
     restart: always
     volumes:
       - notification_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env-notification-example
+
+  notification_worker:
+    build:
+      context: notification_worker
+      dockerfile: Dockerfile
+    restart: always
     env_file:
       - .env-notification-example

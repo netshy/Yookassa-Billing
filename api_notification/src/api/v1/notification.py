@@ -8,6 +8,7 @@ from starlette.responses import Response
 
 import broker
 from api.config import config
+
 from models.choices import NotificationType
 from models.email_event import EmailEvent, EmailNotificationBody
 from models.payment_event import PaymentEvent, UserPaymentNotification
@@ -97,3 +98,4 @@ async def publish_refund_event_to_queue(request: UserPaymentNotification):
         raise HTTPException(status_code=http.HTTPStatus.INTERNAL_SERVER_ERROR)
 
     return Response(status_code=201)
+PikaClient

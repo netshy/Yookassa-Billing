@@ -61,7 +61,7 @@ class YooKassPayment(PaymentBaseService):
     async def cancel_subscription(self, user_id: str, subscription_id: str) -> bool:
         subscription = self.storage_service.get_customer_subscription_by_id(user_id, subscription_id)
         # we refund money only if there is at least more than 10 days left unlit subscription end
-        days_left = (subscription.end_date - dt.datetime.now(tz=dt.timezone.utc)).days
+        days_left = (subscription.end_date - dt.datetime.now()).days
         if days_left < 10:
             return False
 

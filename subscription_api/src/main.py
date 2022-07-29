@@ -48,7 +48,7 @@ async def shutdown():
     await storage.cache_storage.close()
 
 
-app.include_router(subscription_plans_router, prefix="/api/billing/v1/subscription_plans", tags=["subscription_plans"])
-app.include_router(subscription_router, prefix="/api/billing/v1/subscriptions", tags=["subscriptions"])
-app.include_router(transaction_router, prefix="/api/billing/v1/transactions", tags=["transactions"])
-app.include_router(refund_router, prefix="/api/billing/v1/refunds", tags=["refunds"])
+app.include_router(subscription_plans_router, prefix="/subscription/api/billing/v1/subscription_plans", tags=["subscription_plans"])
+app.include_router(subscription_router, prefix="/subscription/api/billing/v1/subscriptions", tags=["subscriptions"])
+app.include_router(transaction_router, prefix="/subscription/api/billing/v1/transactions", tags=["transactions"])
+app.include_router(refund_router, prefix="/subscription/api/billing/v1/refunds", tags=["refunds"])

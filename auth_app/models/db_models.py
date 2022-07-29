@@ -34,7 +34,7 @@ class User(BaseModelMixin, sql_db.Model):
     def find_by_login(cls, login: str):
         # Trying to find user by it's login
         # https://stackoverflow.com/a/8934748
-        return cls.query.filter_by(login=login).first()\
+        return cls.query.filter_by(login=login).first()
 
     @classmethod
     def find_by_email(cls, email: str):

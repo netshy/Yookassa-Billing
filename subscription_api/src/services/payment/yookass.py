@@ -1,18 +1,17 @@
+import datetime as dt
 import json
+import uuid
 from typing import Tuple
 
 from dateutil import parser
-import uuid
-
 from fastapi import Depends
 from yookassa import Payment, Refund
-import datetime as dt
-
 from yookassa.domain.exceptions import BadRequestError
 
 from db.redis import RedisStorage
 from db.service.pg_service import PostgresService, get_db_service
 from db.storage import get_cache_storage
+from scheduler.choices import YookassaTransactionStatusEnum
 from schemas.subscription_schema import RefundSchema
 from schemas.transaction import PaymentTransactionSchema
 from services.payment.base import PaymentBaseService
@@ -89,7 +88,7 @@ class YooKassPayment(PaymentBaseService):
             created_at=parser.parse(refund.created_at)
         )
         self.storage_service.create_refund(formatted_refund)
-        if refund.status == "succeeded":
+        if refund.status == YookassaTransactionStatusEnum.SUCCESS:
             self.storage_service.close_subscription(subscription_id)
             return True
         return False

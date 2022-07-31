@@ -14,7 +14,12 @@ from .types import PaymentType
 router = APIRouter()
 
 
-@router.get("/", response_model=List[SubscriptionSchema])
+@router.get(
+    "/",
+    response_model=List[SubscriptionSchema],
+    summary="Отобразить все тарифные планы пользователя.",
+    description="отображается дата начала тарифного плана, дата окончания, стоимость."
+)
 @login_required()
 async def subscriptions_list(
         request: Request,
@@ -24,7 +29,11 @@ async def subscriptions_list(
     return subscriptions
 
 
-@router.get("/{subscription_id}", response_model=SubscriptionSchema)
+@router.get(
+    "/{subscription_id}",
+    response_model=SubscriptionSchema,
+    summary="Отобразить конкретный тарифный план пользователя."
+)
 @login_required()
 async def get_subscription(
         subscription_id: str,
@@ -35,7 +44,15 @@ async def get_subscription(
     return subscription
 
 
-@router.delete("/{subscription_id}", status_code=HTTPStatus.NO_CONTENT)
+@router.delete(
+    "/{subscription_id}",
+    status_code=HTTPStatus.NO_CONTENT,
+    summary="Закрытие тарифного плана.",
+    description=(
+        "Закрытие тарифного плана с даты когда был сделан запрос."
+        "Закрытие и возврат средств осуществляется в случае, если до окончания тарифного плана остается более 10 дней."
+    )
+)
 @login_required()
 async def cancel_subscription(
         subscription_id: str,
@@ -66,4 +83,3 @@ async def cancel_subscription(
         is_successful=True,
         notification_type=PaymentType.REFUND.value
     )
-

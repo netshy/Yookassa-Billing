@@ -15,7 +15,11 @@ from services.payment.yookass import YooKassPayment, get_payment_service
 router = APIRouter()
 
 
-@router.get("/", response_model=List[TransactionSchema])
+@router.get(
+    "/",
+    response_model=List[TransactionSchema],
+    summary="Отображение всех транзакций пользователя."
+)
 @login_required()
 async def transactions_list(
         request: Request,
@@ -25,7 +29,11 @@ async def transactions_list(
     return transactions
 
 
-@router.post("/", response_model=TransactionConfirmationUrl)
+@router.post(
+    "/",
+    response_model=TransactionConfirmationUrl,
+    summary="Создание новой транзакции при подключении тарифного плана."
+)
 @login_required()
 async def create_transaction(
         request: Request,
@@ -50,7 +58,12 @@ async def create_transaction(
     return TransactionConfirmationUrl(confirmation_url=data)
 
 
-@router.post("/yookas_callback", status_code=HTTPStatus.OK)
+@router.post(
+    "/yookas_callback",
+    status_code=HTTPStatus.OK,
+    summary="Прием входящих запросов от сервиса ЮКасса",
+    description="Прием входящих сообщений о успешных/неудачных оплатах и успешных возвратах."
+)
 async def yookas_callback(
         request: Request,
         payment_service: YooKassPayment = Depends(get_payment_service),
@@ -65,7 +78,11 @@ async def yookas_callback(
     )
 
 
-@router.get("/{transaction_id}", response_model=TransactionSchema)
+@router.get(
+    "/{transaction_id}",
+    response_model=TransactionSchema,
+    summary="отобразить конкретную транзакцию пользователя."
+)
 @login_required()
 async def transaction_get(
         transaction_id: str,
@@ -74,5 +91,3 @@ async def transaction_get(
 ):
     transaction = db_service.get_user_transaction_by_id(transaction_id, request.user.id)
     return transaction
-
-

@@ -39,8 +39,8 @@ SWAGGER_TEMPLATE = {
             "name": "Authorization",
             "in": "header",
             "scheme": "bearer",
-            "BearerFormat": "JWT"
+            "BearerFormat": "JWT",
         }
     },
-    "security": [{"BearerAuth": []}]
+    "security": [{"BearerAuth": []}],
 }

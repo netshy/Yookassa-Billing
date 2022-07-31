@@ -37,9 +37,7 @@ class PikaClient:
 
     def on_channel_open(self):
         self.channel.confirm_delivery()
-        self.channel.queue_declare(
-            queue=config.rabbit_email_events_queue, durable=True
-        )
+        self.channel.queue_declare(queue=config.rabbit_email_events_queue, durable=True)
         self.channel.exchange_declare(
             exchange=config.rabbit_exchange,
             durable=True,
@@ -51,9 +49,7 @@ class PikaClient:
         )
 
     @staticmethod
-    def handle_event_callback(
-        ch: BlockingChannel, method, properties, body: bytes
-    ):
+    def handle_event_callback(ch: BlockingChannel, method, properties, body: bytes):
         event_data = orjson.loads(body)
         event_type = event_data["type"]
         events_model = {

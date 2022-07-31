@@ -10,7 +10,7 @@ class UUIDMixin:
         primary_key=True,
         index=True,
         default=uuid.uuid4,
-        unique=True
+        unique=True,
     )
 
 

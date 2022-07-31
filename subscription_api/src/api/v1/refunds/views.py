@@ -9,9 +9,14 @@ from schemas.subscription_schema import RefundSchema
 router = APIRouter()
 
 
-@router.get("/", response_model=List[RefundSchema])
+@router.get(
+    "/",
+    response_model=List[RefundSchema],
+    summary="Отображение возвратов пользователя.",
+    description="Отображает все возвраты пользователя, включая сумму возврата, дату, статус итп."
+)
 @login_required()
-async def subscriptions_list(
+async def refunds_list(
         request: Request,
         db_service: PostgresService = Depends(get_db_service)
 ):
@@ -19,7 +24,11 @@ async def subscriptions_list(
     return refunds
 
 
-@router.get("/{refund_id}", response_model=RefundSchema)
+@router.get(
+    "/{refund_id}",
+    response_model=RefundSchema,
+    summary="Отобразить конкретный возврат по его id."
+)
 @login_required()
 async def get_refund(
         refund_id: str,

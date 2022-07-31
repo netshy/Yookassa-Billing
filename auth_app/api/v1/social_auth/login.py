@@ -14,4 +14,3 @@ class YandexSocialLogin(Resource):
         url_redirect = url + urllib.parse.urlencode(params)
 
         return redirect(url_redirect)
-

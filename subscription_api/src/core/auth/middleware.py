@@ -4,7 +4,11 @@ import grpc
 import jwt
 from fastapi.security import HTTPBearer
 from fastapi.security.utils import get_authorization_scheme_param
-from starlette.authentication import AuthenticationBackend, AuthCredentials, UnauthenticatedUser
+from starlette.authentication import (
+    AuthenticationBackend,
+    AuthCredentials,
+    UnauthenticatedUser,
+)
 
 from grcp_client.user_pb2 import UserRequest
 from grcp_client.user_pb2_grpc import UserServiceStub
@@ -18,9 +22,9 @@ security = HTTPBearer()
 class CustomAuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
         # Get JWT token from auth header
-        authorization: str = request.headers.get('Authorization')
+        authorization: str = request.headers.get("Authorization")
         scheme, credentials = get_authorization_scheme_param(authorization)
-        if scheme.lower() != 'bearer':
+        if scheme.lower() != "bearer":
             return AuthCredentials(), UnauthenticatedUser()
 
         if not credentials:
@@ -31,7 +35,7 @@ class CustomAuthBackend(AuthenticationBackend):
             jwt_decoded = jwt.decode(
                 credentials,
                 billing_setting.JWT_SECRET_KEY,
-                algorithms=[billing_setting.JWT_ALGORITHM]
+                algorithms=[billing_setting.JWT_ALGORITHM],
             )
         except (jwt.DecodeError, jwt.ExpiredSignatureError):
             return AuthCredentials(), UnauthenticatedUser()
@@ -41,9 +45,5 @@ class CustomAuthBackend(AuthenticationBackend):
             request = UserRequest(login=jwt_decoded["login"])
             user = client.GetUser(request)
 
-        auth_user = User(
-            id=user.id,
-            login=user.login,
-            email=user.email
-        )
-        return AuthCredentials(['authenticated']), auth_user
+        auth_user = User(id=user.id, login=user.login, email=user.email)
+        return AuthCredentials(["authenticated"]), auth_user

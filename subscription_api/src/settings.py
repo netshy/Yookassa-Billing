@@ -27,5 +27,7 @@ class Config(BaseConfig):
     REFUND_NOTIFICATION_URL: str = os.getenv("REFUND_NOTIFICATION_URL")
     PAYMENT_NOTIFICATION_URL: str = os.getenv("PAYMENT_NOTIFICATION_URL")
 
+    MIN_REFUND_DAYS = 10
+
 
 billing_setting = Config()

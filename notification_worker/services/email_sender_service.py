@@ -17,5 +17,5 @@ class EmailSenderService:
         result = requests.post(
             mailgun_config.mailgun_sandbox_url, auth=authentication, data=data
         )
-        logger.info(f'send mail to {to}, status: {result.status_code}')
+        logger.info(f"send mail to {to}, status: {result.status_code}")
         return result.status_code

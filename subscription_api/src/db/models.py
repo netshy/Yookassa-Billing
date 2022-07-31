@@ -27,7 +27,7 @@ class SubscriptionModel(UUIDMixin, TimeStampedMixin, CustomerUUIDMixin, Base):
 
 class TransactionModel(UUIDMixin, CustomerUUIDMixin, TimeStampedMixin, Base):
     __tablename__ = "transaction"
-    
+
     plan_id = Column(UUID, ForeignKey("subscription_plan.id"))
     session_id = Column(String)
     code = Column(String)

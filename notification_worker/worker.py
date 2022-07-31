@@ -14,11 +14,11 @@ from services.user_service import UserService
 
 class Worker:
     def __init__(
-            self,
-            pgh: PostgresHelper,
-            user_service: UserService,
-            film_service: FilmService,
-            email_sender: EmailSenderService,
+        self,
+        pgh: PostgresHelper,
+        user_service: UserService,
+        film_service: FilmService,
+        email_sender: EmailSenderService,
     ):
         self.pgh = pgh
         self.user_service = user_service
@@ -97,4 +97,3 @@ class Worker:
 
     def handle_refund_event(self, notification: PaymentEvent):
         self._send_billing_email(notification)
-

@@ -4,7 +4,6 @@ from db.database import SessionLocal
 
 
 class BaseDBService(ABC):
-
     def __init__(self, session: SessionLocal):
         self.session = session
 

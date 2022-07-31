@@ -66,4 +66,3 @@ async def cancel_subscription(
         is_successful=True,
         notification_type=PaymentType.REFUND.value
     )
-

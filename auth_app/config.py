@@ -15,9 +15,7 @@ class Config:
 
     JWT_SECRET_KEY = env.str("JWT_SECRET_KEY")
     JWT_ACCESS_TOKEN_EXPIRES = env.timedelta("JWT_ACCESS_TOKEN_EXPIRES", 3600)
-    JWT_REFRESH_TOKEN_EXPIRES = env.timedelta(
-        "JWT_REFRESH_TOKEN_EXPIRES", False
-    )
+    JWT_REFRESH_TOKEN_EXPIRES = env.timedelta("JWT_REFRESH_TOKEN_EXPIRES", False)
     PROPAGATE_EXCEPTIONS = True
 
     REDIS_HOST = env.str("REDIS_HOST")

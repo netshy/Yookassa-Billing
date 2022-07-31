@@ -13,6 +13,7 @@ class UserService(user_pb2_grpc.UserService):
         # https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
 
         from auth import create_app
+
         app = create_app()
         with app.app_context():
             from models import User
@@ -35,6 +36,7 @@ class UserService(user_pb2_grpc.UserService):
         # https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
 
         from auth import create_app
+
         app = create_app()
         with app.app_context():
             from models import User

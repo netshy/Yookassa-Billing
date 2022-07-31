@@ -18,6 +18,4 @@ class GRCPClient:
 
 
 def grcp_client_service(channel: Channel = Depends(get_grcp_channel)):
-    return GRCPClient(
-        channel=channel
-    )
+    return GRCPClient(channel=channel)

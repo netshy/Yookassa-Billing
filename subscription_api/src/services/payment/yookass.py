@@ -15,6 +15,7 @@ from scheduler.choices import YookassaTransactionStatusEnum
 from schemas.subscription_schema import RefundSchema
 from schemas.transaction import PaymentTransactionSchema
 from services.payment.base import PaymentBaseService
+from settings import billing_setting
 
 
 class YooKassPayment(PaymentBaseService):
@@ -48,23 +49,28 @@ class YooKassPayment(PaymentBaseService):
             customer_id=user_id,
             code=idempotence_key,
             plan_id=subscription_id,
-            amount=float(amount["value"])
+            amount=float(amount["value"]),
         )
         self.storage_service.create_transaction(transaction_data)
         await self.cache_storage.set(
             key=f"{user_id}_{subscription_id}",
-            value=payment.confirmation.confirmation_url, expire=1200
+            value=payment.confirmation.confirmation_url,
+            expire=1200,
         )
         return payment.confirmation.confirmation_url
 
     async def cancel_subscription(self, user_id: str, subscription_id: str) -> bool:
-        subscription = self.storage_service.get_customer_subscription_by_id(user_id, subscription_id)
+        subscription = self.storage_service.get_customer_subscription_by_id(
+            user_id, subscription_id
+        )
         # we refund money only if there is at least more than 10 days left unlit subscription end
         days_left = (subscription.end_date - dt.datetime.now()).days
-        if days_left < 10:
+        if days_left < billing_setting.MIN_REFUND_DAYS:
             return False
 
-        subscription_plan = self.storage_service.get_subscription_plan(subscription.plan_id)
+        subscription_plan = self.storage_service.get_subscription_plan(
+            subscription.plan_id
+        )
         payment_id = subscription.payment_id
         amount_to_refund = (subscription_plan.price/subscription_plan.duration)*days_left
         try:
@@ -85,7 +91,7 @@ class YooKassPayment(PaymentBaseService):
             customer_id=user_id,
             amount=float(refund.amount.value),
             status=refund.status,
-            created_at=parser.parse(refund.created_at)
+            created_at=parser.parse(refund.created_at),
         )
         self.storage_service.create_refund(formatted_refund)
         if refund.status == YookassaTransactionStatusEnum.SUCCESS:
@@ -97,30 +103,36 @@ class YooKassPayment(PaymentBaseService):
         types = {
             "payment.succeeded": "payment",
             "payment.canceled": "payment",
-            "refund.succeeded": "refund"
+            "refund.succeeded": "refund",
         }
         event_type = callback_data["event"]
         data_object = callback_data["object"]
         return_type = types[event_type]
 
         if event_type == "payment.succeeded":
-            transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
+            transaction = self.storage_service.get_transaction_by_session_id(
+                data_object["id"]
+            )
             self.storage_service.set_transaction_as_active(transaction.id)
             self.storage_service.create_user_subscription(transaction)
             return return_type, transaction.customer_id, True
         elif event_type == "payment.canceled":
-            transaction = self.storage_service.get_transaction_by_session_id(data_object["id"])
+            transaction = self.storage_service.get_transaction_by_session_id(
+                data_object["id"]
+            )
             self.storage_service.set_transaction_as_declined(data_object["id"])
             return return_type, transaction.customer_id, False
         elif event_type == "refund.succeeded":
             refund = self.storage_service.get_refund_by_id(data_object["id"])
             self.storage_service.set_refund_as_succeeded(data_object["id"])
-            self.storage_service.cancel_user_subscription_by_payment_id(data_object["payment_id"])
+            self.storage_service.cancel_user_subscription_by_payment_id(
+                data_object["payment_id"]
+            )
             return return_type, refund.customer_id, True
 
 
 def get_payment_service(
-        storage_service: PostgresService = Depends(get_db_service),
-        cache_storage: RedisStorage = Depends(get_cache_storage)
+    storage_service: PostgresService = Depends(get_db_service),
+    cache_storage: RedisStorage = Depends(get_cache_storage),
 ) -> YooKassPayment:
     return YooKassPayment(storage_service, cache_storage)

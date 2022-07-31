@@ -15,6 +15,8 @@ def subscription_plans_list(db_service: PostgresService = Depends(get_db_service
 
 
 @router.get("/{subscription_id}", response_model=SubscriptionPlanSchema)
-def subscription_plan_get(subscription_id: str, db_service: PostgresService = Depends(get_db_service)):
+def subscription_plan_get(
+    subscription_id: str, db_service: PostgresService = Depends(get_db_service)
+):
     subscription_plan = db_service.get_subscriptions_plan_by_id(subscription_id)
     return subscription_plan

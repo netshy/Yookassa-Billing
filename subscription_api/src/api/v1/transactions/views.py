@@ -74,5 +74,3 @@ async def transaction_get(
 ):
     transaction = db_service.get_user_transaction_by_id(transaction_id, request.user.id)
     return transaction
-
-

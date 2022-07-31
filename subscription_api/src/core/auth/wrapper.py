@@ -10,7 +10,11 @@ def login_required():
         async def inner(*args, **kwargs):  # noqa
             request = kwargs.get("request")
             if not getattr(request, "user", False) or not request.user.is_authenticated:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='wrong credentials')
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED, detail="wrong credentials"
+                )
             return await func(*args, **kwargs)
+
         return inner
+
     return wrapper

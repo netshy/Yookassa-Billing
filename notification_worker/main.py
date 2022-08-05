@@ -19,12 +19,12 @@ worker = Worker(
 def main():
     from rabbimq import PikaClient
 
-    try:
-        rabbitmq_broker = PikaClient()
-        while True:
+    while True:
+        try:
+            rabbitmq_broker = PikaClient()
             rabbitmq_broker.listen_events()
-    finally:
-        rabbitmq_broker.connection.close()
+        finally:
+            rabbitmq_broker.connection.close()
 
 
 if __name__ == "__main__":

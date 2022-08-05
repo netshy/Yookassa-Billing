@@ -16,6 +16,7 @@ class PikaClient:
             config.rabbit_host,
             config.rabbit_port,
             credentials=self.credentials,
+            heartbeat=0
         )
         self.connection = self._connect()
         self.channel = self.connection.channel()

@@ -42,7 +42,7 @@ https://billingpracticum.ru/
 2. получает email об отмене подписки
 3. подписка отменена!
 
-## Для удобства отправки запросов подготовленна коллекция в [Postman](https://github.com/netshy/graduate_work/blob/main/Yookassa%20Billing.postman_collection.json)
+## Для удобства отправки запросов подготовленна коллекция в [Postman](https://github.com/netshy/graduate_work/blob/main/Yookassa%20Billing.postman_collection.json) | [Environments](https://github.com/netshy/graduate_work/blob/main/Billing%20project.postman_environment.json)
 
 ### Admin panel billing
 https://billingpracticum.ru/billing/admin/

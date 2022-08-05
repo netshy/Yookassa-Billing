@@ -26,7 +26,7 @@ https://billingpracticum.ru/
 - Проверка статусов транзаций в случае сетевых перебоев
 
 ## Architecture
-![](https://i.ibb.co/VvzNm3m/billing-arch-drawio.png)
+![](https://i.ibb.co/ZgXMtf5/billing-drawio-1.png)
 
 ## Get subscription user flow
 1. регистрируется

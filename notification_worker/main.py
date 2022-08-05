@@ -22,9 +22,8 @@ def main():
     from rabbimq import PikaClient
 
     rabbitmq_broker = PikaClient()
-    rabbitmq_broker.consume()
     try:
-        rabbitmq_broker.listen_events()
+        rabbitmq_broker.receive()
     except Exception as err:
         logger.error('pika error:', err)
         rabbitmq_broker.channel.stop_consuming()

@@ -1,3 +1,5 @@
+import threading
+
 import backoff as backoff
 import pika
 from loguru import logger
@@ -70,13 +72,26 @@ class PikaClient:
         notification = event_model(**event_data)
         func(notification)
 
-    def consume(self):
+    def receive(self, callback=None):
+        """rabbitmq receiver"""
+
+        def cb(ch, method, properties, body):
+            if callback is not None:
+                t = threading.Thread(target=callback, args=(body,))
+                t.daemon = True
+                t.start()
+
+                while t.is_alive():
+                    logger.info("heart beating")
+                    self.connection.process_data_events()
+                    self.connection.sleep(5)
+
+            ch.basic_ack(delivery_tag=method.delivery_tag)
+
         self.channel.basic_consume(
             queue=config.rabbit_email_events_queue,
             on_message_callback=self.handle_event_callback,
             auto_ack=True,
         )
-
-    def listen_events(self):
         logger.info(f"listen queue: {config.rabbit_email_events_queue}")
         self.channel.start_consuming()

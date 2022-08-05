@@ -29,12 +29,7 @@ async def publish_hello_event_to_queue(request: UserRegistration):
     )
 
     try:
-        broker.rabbitmq_broker.channel.basic_publish(
-            exchange=config.rabbit_exchange,
-            routing_key=config.rabbit_email_events_queue,
-            body=event.json(),
-            mandatory=True,
-        )
+        broker.rabbitmq_broker.basic_publish(event)
     except UnroutableError:
         logger.error("message was returned")
         raise HTTPException(status_code=http.HTTPStatus.NOT_FOUND)

@@ -43,3 +43,15 @@ class PikaClient:
             exchange=config.rabbit_exchange,
             routing_key=config.rabbit_email_events_queue,
         )
+
+    def basic_publish(self, event):
+        if self.connection.is_open:
+            self.channel.basic_publish(
+                exchange=config.rabbit_exchange,
+                routing_key=config.rabbit_email_events_queue,
+                body=event.json(),
+                mandatory=True,
+            )
+        else:
+            logger.warning('Connection lost, make new')
+            self._connect()

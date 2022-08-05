@@ -1,3 +1,5 @@
+from loguru import logger
+
 from config import config
 from db.pg_service import PostgresConnector, PostgresHelper
 from services.film_service import FilmService
@@ -19,12 +21,13 @@ worker = Worker(
 def main():
     from rabbimq import PikaClient
 
-    while True:
-        try:
-            rabbitmq_broker = PikaClient()
-            rabbitmq_broker.listen_events()
-        finally:
-            rabbitmq_broker.connection.close()
+    rabbitmq_broker = PikaClient()
+    rabbitmq_broker.consume()
+    try:
+        rabbitmq_broker.listen_events()
+    except Exception as err:
+        logger.error('pika error:', err)
+        rabbitmq_broker.channel.stop_consuming()
 
 
 if __name__ == "__main__":

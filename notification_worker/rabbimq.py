@@ -23,7 +23,6 @@ class PikaClient:
             config.rabbit_host,
             config.rabbit_port,
             credentials=self.credentials,
-            heartbeat=0,
         )
         self.connection = self._connect()
         self.channel = self.connection.channel()
@@ -71,11 +70,13 @@ class PikaClient:
         notification = event_model(**event_data)
         func(notification)
 
-    def listen_events(self):
+    def consume(self):
         self.channel.basic_consume(
             queue=config.rabbit_email_events_queue,
             on_message_callback=self.handle_event_callback,
             auto_ack=True,
         )
+
+    def listen_events(self):
         logger.info(f"listen queue: {config.rabbit_email_events_queue}")
         self.channel.start_consuming()

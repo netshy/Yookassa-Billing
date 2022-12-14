@@ -5,7 +5,7 @@ https://github.com/netshy/graduate_work
 ![](https://i.ibb.co/60Pnnbt/image.png)
 
 ### Сайт развернут в интернете (только бэк, исключение django)
-https://billingpracticum.ru/
+~~https://billingpracticum.ru/~~
 
 
 
@@ -38,13 +38,13 @@ https://billingpracticum.ru/
 7. подписка оформлена!
 
 ## Get refund user flow
-1. указывает актуальную подписку для отмены `subscription_id
+1. указывает актуальную подписку для отмены `subscription_id`
 2. получает email об отмене подписки
 3. подписка отменена!
 
 ## Для удобства отправки запросов подготовленна коллекция в [Postman](https://github.com/netshy/graduate_work/blob/main/Yookassa%20Billing.postman_collection.json) | [Environments](https://github.com/netshy/graduate_work/blob/main/Billing%20project.postman_environment.json)
 
 ### Admin panel billing
-https://billingpracticum.ru/billing/admin/
+~~https://billingpracticum.ru/billing/admin/
 login: `n`
-password: `1`
+password: `1`~~

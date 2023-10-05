@@ -20,7 +20,7 @@ Implement the "Billing" project. Two methods for working with cards must be deve
 - Status checks of transactions in case of network disruptions.
 
 ## Architecture
-![](https://i.ibb.co/ZgXMtf5/billing-drawio-1.png)
+![](https://i.ibb.co/4MHQDwR/billing-drawio.png)
 
 ## Get subscription user flow
 1. User registers.

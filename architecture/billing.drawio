@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-08-05T07:23:13.608Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="9EiDFOiqGqshlE39C7qK" version="20.0.4" type="github">
+<mxfile host="Electron" modified="2023-10-05T09:19:50.418Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.1 Chrome/112.0.5615.204 Electron/24.6.0 Safari/537.36" etag="KIt0o_FusOzbvSCFdycZ" version="21.5.1" type="device">
   <diagram id="yFJxhhgvQcIu0sI4FCVC" name="Page-1">
-    <mxGraphModel dx="1123" dy="671" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="756" dy="1019" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -32,13 +32,13 @@
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.7;entryDx=0;entryDy=0;fontSize=19;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-8" target="KeZkGjDvf1cTOCYMGfL9-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="KeZkGjDvf1cTOCYMGfL9-8" target="iaycjzCgs8troD7BYC1r-1">
+        <mxCell id="iaycjzCgs8troD7BYC1r-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-8" target="iaycjzCgs8troD7BYC1r-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="KeZkGjDvf1cTOCYMGfL9-8" target="iaycjzCgs8troD7BYC1r-13">
+        <mxCell id="iaycjzCgs8troD7BYC1r-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-8" target="iaycjzCgs8troD7BYC1r-13" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-8" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Создание/отмена/просмотр подписок/транзакций&lt;br&gt;«Subscription API»&lt;br&gt;&lt;b&gt;[FastApi]&lt;/b&gt;&lt;/font&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-8" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Creating/canceling/viewing subscriptions/transactions.&lt;br&gt;«Subscription API»&lt;br&gt;&lt;b&gt;[FastApi]&lt;/b&gt;&lt;/font&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="180" y="450" width="210" height="120" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-9" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="KeZkGjDvf1cTOCYMGfL9-8" vertex="1">
@@ -49,7 +49,7 @@
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-11" target="KeZkGjDvf1cTOCYMGfL9-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-11" value="Админка&lt;br&gt;Просмотр подсписок, транзакций&lt;br&gt;«Admin Panel»&lt;br&gt;&lt;b&gt;[Django]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-11" value="Admin Panel&lt;br&gt;Viewing sublists, transactions&lt;br&gt;«Admin Panel»&lt;br&gt;&lt;b&gt;[Django]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="220" y="70" width="200" height="110" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-12" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="KeZkGjDvf1cTOCYMGfL9-11" vertex="1">
@@ -65,17 +65,17 @@
             <mxPoint x="390.0000000000002" y="569.9999999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-18" value="PAYMENT GATEWAY&lt;br&gt;[Юкасса]" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fontSize=8;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-18" value="PAYMENT GATEWAY&lt;br&gt;[Yookassa&amp;nbsp;]" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fontSize=8;" parent="1" vertex="1">
           <mxGeometry x="220" y="660" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-20" value="Формирование checkout URL на оплату" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
-          <mxGeometry x="70" y="620" width="160" height="20" as="geometry" />
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-20" value="Generating a checkout URL for payment" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
+          <mxGeometry x="65" y="620" width="170" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-22" value="Создание(запись) транзакции (Payment Intent)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
-          <mxGeometry x="120" y="340" width="190" height="20" as="geometry" />
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-22" value="Creating (recording) a transaction (Payment Intent)." style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
+          <mxGeometry x="110" y="340" width="210" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-27" value="Юкасса callback" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" parent="1" vertex="1">
-          <mxGeometry x="295" y="570" width="100" height="20" as="geometry" />
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-27" value="Yookassa callback" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="290" y="565" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.571;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=9;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-32" target="KeZkGjDvf1cTOCYMGfL9-35" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -83,7 +83,7 @@
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-32" value="&lt;span style=&quot;&quot;&gt;RabbitMQ&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="640" y="622.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-34" value="Передача сообщения в сервис нотификаций" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-34" value="Sending a message to the notification service." style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" parent="1" vertex="1">
           <mxGeometry x="415" y="550" width="210" height="20" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-35" value="Notifications&lt;br&gt;queue" style="shape=datastore;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -94,12 +94,12 @@
             <mxPoint x="840" y="430" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KeZkGjDvf1cTOCYMGfL9-37">
+        <mxCell id="iaycjzCgs8troD7BYC1r-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-37" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="980" y="502.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-37" value="Worker&lt;br&gt;&lt;font style=&quot;font-size: 8px;&quot;&gt;«Забирает таски и отправляет уведомление»&lt;br&gt;&lt;/font&gt;&lt;b&gt;[Python app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-37" value="Worker&lt;br&gt;&lt;font style=&quot;font-size: 8px;&quot;&gt;«Fetches tasks and sends notifications»&lt;br&gt;&lt;/font&gt;&lt;b&gt;[Python app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="750" y="450" width="180" height="105" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-38" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="KeZkGjDvf1cTOCYMGfL9-37" vertex="1">
@@ -107,16 +107,16 @@
             <mxPoint x="-27" y="7" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-40" value="Сервис Auth&lt;br&gt;&lt;b&gt;[Flask app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-40" value="Service Auth&lt;br&gt;&lt;b&gt;[Flask app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="10" y="530" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-47" value="Выставляет подписку пользователю/Обновляет статус транзакции" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
-          <mxGeometry x="460" y="394" width="270" height="20" as="geometry" />
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-47" value="Sets up a subscription for the user / Updates the transaction status." style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;" parent="1" vertex="1">
+          <mxGeometry x="465" y="394" width="260" height="20" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.3;entryDx=0;entryDy=0;fontSize=9;" parent="1" source="KeZkGjDvf1cTOCYMGfL9-48" target="KeZkGjDvf1cTOCYMGfL9-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-48" value="Контроль транзакций&lt;br&gt;«Scheduler»&lt;br&gt;&lt;b&gt;[Python app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-48" value="Transaction control&lt;br&gt;«Scheduler»&lt;br&gt;&lt;b&gt;[Python app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="780" y="120" width="180" height="100" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-49" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="KeZkGjDvf1cTOCYMGfL9-48" vertex="1">
@@ -124,27 +124,27 @@
             <mxPoint x="-27" y="7" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="KeZkGjDvf1cTOCYMGfL9-51" value="Шедулер контролирует &quot;зависшие&quot; транзакции&lt;br&gt;(например оплаченные, но не был выставлен статус итп)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" parent="1" vertex="1">
-          <mxGeometry x="490" y="140" width="260" height="30" as="geometry" />
+        <mxCell id="KeZkGjDvf1cTOCYMGfL9-51" value="The scheduler monitors &#39;stuck&#39; transactions (for example, &lt;br&gt;paid but without the status being updated, etc.)." style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="495" y="135" width="250" height="40" as="geometry" />
         </mxCell>
         <mxCell id="KeZkGjDvf1cTOCYMGfL9-52" value="&lt;b&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;Billing Architecture&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" parent="1" vertex="1">
           <mxGeometry x="480" y="10" width="190" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="iaycjzCgs8troD7BYC1r-1" target="KeZkGjDvf1cTOCYMGfL9-32">
+        <mxCell id="iaycjzCgs8troD7BYC1r-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="iaycjzCgs8troD7BYC1r-1" target="KeZkGjDvf1cTOCYMGfL9-32" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-1" value="Notification API&lt;font style=&quot;font-size: 8px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;b&gt;[FastApi app]&lt;/b&gt;" style="html=1;dropTarget=0;" vertex="1" parent="1">
+        <mxCell id="iaycjzCgs8troD7BYC1r-1" value="Notification API&lt;font style=&quot;font-size: 8px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;b&gt;[FastApi app]&lt;/b&gt;" style="html=1;dropTarget=0;" parent="1" vertex="1">
           <mxGeometry x="430" y="600" width="180" height="105" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-2" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="iaycjzCgs8troD7BYC1r-1">
+        <mxCell id="iaycjzCgs8troD7BYC1r-2" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="iaycjzCgs8troD7BYC1r-1" vertex="1">
           <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
             <mxPoint x="-27" y="7" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-11" value="Отправка письма на email" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="980" y="472.5" width="120" height="60" as="geometry" />
+        <mxCell id="iaycjzCgs8troD7BYC1r-11" value="Sending an email to the specified email address." style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="980" y="472.5" width="150" height="67.5" as="geometry" />
         </mxCell>
-        <mxCell id="iaycjzCgs8troD7BYC1r-13" value="Redis cache" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Cache_Redis_Product.svg;" vertex="1" parent="1">
+        <mxCell id="iaycjzCgs8troD7BYC1r-13" value="Redis cache" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Cache_Redis_Product.svg;" parent="1" vertex="1">
           <mxGeometry x="170" y="372" width="50" height="42" as="geometry" />
         </mxCell>
       </root>
